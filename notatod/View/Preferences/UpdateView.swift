@@ -7,6 +7,7 @@ import SwiftUI
 
 struct UpdateView: View {
     @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+
     var body: some View {
         HStack {
             VStack {
@@ -20,10 +21,38 @@ struct UpdateView: View {
                         .font(.footnote)
             }.padding()
             Divider().padding()
-            VStack(alignment: .leading) {
+
+            if signInViewModel.isUpdateAvailable {
+
+                VStack(alignment: .leading) {
+                    Text("Update available")
+                            .bold()
+                    Spacer()
+                    Text("Version \(signInViewModel.version?.versionName ?? "Unknown") (\(signInViewModel.version?.versionCode ?? 0))")
+                    HStack {
+                        Spacer()
+                        Text(signInViewModel.version?.changelogString ?? "")
+                        Spacer()
+                    }
+                    Spacer()
+                    Spacer()
+                    Button(action: {
+                        let downloadPageUrlString = signInViewModel.version?.downloadPage ?? "https://github.com/utsmannn"
+                        let downloadPageUrl = URL(string: downloadPageUrlString)
+                        let config = NSWorkspace.OpenConfiguration()
+                        NSWorkspace.shared.open(downloadPageUrl!, configuration: config) { application, error in
+                            log("opening..")
+                        }
+                    }, label: {
+                        Text("Update now")
+                    })
+                }.padding()
+
+
+            } else {
                 Text("No update available")
                         .frame(alignment: .topLeading)
-            }.padding()
+            }
             Spacer()
         }.padding()
     }

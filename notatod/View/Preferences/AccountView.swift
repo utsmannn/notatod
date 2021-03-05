@@ -9,16 +9,29 @@ struct AccountView: View {
     @EnvironmentObject var signInViewModel: GoogleSignInViewModel
 
     var body: some View {
-        HStack {
-            VStack {
-                Image("Gdrive")
-                        .resizable()
-                        .frame(width: 100, height: 70)
-                logonLeftView(logonStatus: signInViewModel.logonStatus)
-            }
-            logonRightView(logonStatus: signInViewModel.logonStatus)
 
-        }.padding()
+        HStack {
+            if signInViewModel.isGoogleAuthEnable {
+                VStack {
+                    Image("Gdrive")
+                            .resizable()
+                            .frame(width: 100, height: 70)
+                    logonLeftView(logonStatus: signInViewModel.logonStatus)
+                }
+                logonRightView(logonStatus: signInViewModel.logonStatus)
+            } else {
+                VStack {
+                    Image("Gdrive")
+                            .resizable()
+                            .frame(width: 100, height: 70)
+                    Divider()
+                    Text("Google Drive feature not yet available")
+                }
+            }
+
+        }.padding().onAppear {
+            log("sign in available ----> \(signInViewModel.isGoogleAuthEnable)")
+        }
     }
 
     private func logonLeftView(logonStatus: LogonStatus) -> AnyView {

@@ -13,9 +13,7 @@ struct PreferencesView: View {
             GeneralView()
                     .tabItem {
                         Text("General")
-                    }.tag(Tab.general).onTapGesture {
-                log("cukkkkk")
-            }
+                    }.tag(Tab.general)
             AccountView()
                     .tabItem {
                         Text("Account")

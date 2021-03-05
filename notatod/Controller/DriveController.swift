@@ -11,19 +11,12 @@ class DriveController {
     private let pathSearch = "/drive/v3/files"
     private let pathFile = "/drive/v2/files"
 
-    private let semaphore = DispatchSemaphore(value: 0)
-
     private var networkTask: Network.NetworkTask? {
         NetworkBuilder(session: URLSession.shared)
                 .baseUrl(url: "https://www.googleapis.com")
                 .withAuthorization(authorization: "Bearer \(accessToken!)")
                 .buildTask(enableDebugPrint: true)
     }
-
-    /*private func pathGet(fileId: String) -> String {
-        let path = "/drive/v2/files/{id}?alt=media&source=downloadUrl"
-        return path.replacingOccurrences(of: "{id}", with: fileId)
-    }*/
 
     private func contentBody(csvContent: String) -> String {
         "--foo_bar_baz\nContent-Type: application/json; charset=UTF-8\n\n{\n \"name\": \"{name}\"\n}\n\n--foo_bar_baz\nContent-Type: text/csv\n\n{body}\n--foo_bar_baz--"
@@ -50,7 +43,7 @@ class DriveController {
                         onError(error)
                     })
                 }.onFailure { error in
-                    onError(Error.networkError(error))
+                    onError(Error.network_error(error))
                 }
     }
 
@@ -68,12 +61,12 @@ class DriveController {
                         let response: DriveResponse.FileInfo = try data.decodeData()
                         onSuccess(response)
                     } catch {
-                        onError(.decodingError(error))
+                        onError(.decoding_error(error))
                     }
 
                 }.onFailure { error in
                     log(error)
-                    onError(.networkError(error))
+                    onError(.network_error(error))
                 }
     }
 
@@ -95,13 +88,13 @@ class DriveController {
                             let uploadResponse: DriveResponse.Upload = try data.decodeData()
                             onSuccess(uploadResponse)
                         } catch {
-                            onError(.decodingError(error))
+                            onError(.decoding_error(error))
                         }
                     }.onFailure { error in
-                        onError(.networkError(error))
+                        onError(.network_error(error))
                     }
         } else {
-            onError(.invalidResponse)
+            onError(.invalid_response)
         }
     }
 
@@ -112,7 +105,6 @@ class DriveController {
         networkTask?.request(path: pathSearch, method: .get)
                 .start()
                 .onSuccess { data in
-                    log("mulaiiiiii--------------------------")
                     do {
                         let filesResponse: DriveResponse.Files = try data.decodeData()
                         let files = filesResponse.files
@@ -123,12 +115,10 @@ class DriveController {
                         let fileFound = files[index]
                         onSuccess(fileFound)
                     } catch {
-                        log("error di sini......")
-                        onError(.decodingError(error))
+                        onError(.decoding_error(error))
                     }
                 }.onFailure { error in
-                    log("hhhhhhhhhhhhhhh")
-                    onError(.invalidResponse)
+                    onError(.invalid_response)
                 }
     }
 

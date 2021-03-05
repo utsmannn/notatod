@@ -5,10 +5,10 @@
 import Foundation
 
 enum Error: Swift.Error {
-    case codeNotFoundInRedirectURL
-    case networkError(Swift.Error)
-    case invalidResponse
-    case decodingError(Swift.Error)
+    case code_not_found_in_redirect_URL
+    case network_error(Swift.Error)
+    case invalid_response
+    case decoding_error(Swift.Error)
     case invalid_credential
 }
 

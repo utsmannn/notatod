@@ -27,7 +27,7 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>LSUIElement</key>
-	<false/>
+	<true/>
 	<key>ClientID</key>
 	<string>$(CLIENT_ID)</string>
 	<key>SecretID</key>

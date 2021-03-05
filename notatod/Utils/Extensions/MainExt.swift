@@ -26,4 +26,8 @@ extension NSApplication {
     var AppVersion: String? {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
     }
+
+    var AppVersionInt: Int? {
+        Int(AppVersion ?? "0")
+    }
 }

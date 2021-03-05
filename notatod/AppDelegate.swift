@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     let userDefaultController = UserDefaultController()
     let driveController = DriveController()
+    let featureApiController = FeatureApiController()
 
     var signInViewModel: GoogleSignInViewModel!
     var mainViewModel: MainViewModel!
@@ -36,9 +37,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             }
         }
 
-        signInViewModel = GoogleSignInViewModel(userDefaultController: userDefaultController, driveController: driveController)
-        driveController.accessToken = signInViewModel.getAccessToken()
+        signInViewModel = GoogleSignInViewModel(
+                userDefaultController: userDefaultController,
+                driveController: driveController,
+                featureApiController: featureApiController
+        )
 
+        checkGoogleAuthEnable()
+        checkUpdateAvailable()
+
+        driveController.accessToken = signInViewModel.getAccessToken()
         mainViewModel = MainViewModel(driveController: driveController, userDefaultController: userDefaultController)
         if signInViewModel.profile != nil {
             signInViewModel.logonStatus = .sign_in
@@ -60,25 +68,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         self.popover = popover
         self.popover.appearance = userDefaultController.theme()
 
-        //statusBarItem.button?.image = NSImage(named:NSImage.Name("AppIcon"))
         if let button = statusBarItem.button {
             button.image = #imageLiteral(resourceName: "AppIcon")
             button.image?.size = NSSize(width: 22, height: 22)
             button.action = #selector(togglePopover(_:))
         }
 
-        //setupKeyboardShortcut()
         NSApp.activate(ignoringOtherApps: true)
+    }
 
-        /*NSApplication.shared.windows.forEach { window in
-            window.appearance = NSAppearance(named: .aqua)
-        }*/
+    func checkUpdateAvailable() {
+        featureApiController.checkUpdateAvailable { os in
+            let isUpdateAvailable = NSApplication.shared.AppVersionInt! < os.versionCode
+            self.signInViewModel.version = os
+            self.signInViewModel.isUpdateAvailable = isUpdateAvailable
+        }
+    }
+
+    func checkGoogleAuthEnable() {
+        featureApiController.isGoogleAuthEnable { b in
+            if !b {
+                self.userDefaultController.clearDriveData()
+            }
+            self.signInViewModel.isGoogleAuthEnable = b
+        }
     }
 
     func getFileInDrive() {
-        log("hah---------")
         mainViewModel.getFileInDrive(onSuccess: { success in
-            log("drive -> \(success)")
             if !success {
                 if self.userDefaultController.notes().isEmpty {
                     let list = ConstantData.startingEntity()
@@ -89,7 +106,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                     self.mainViewModel.setSelectionId(selectionId: self.mainViewModel.notes[0].id)
                 }
             } else {
-                log("hmmm----------------------")
                 self.signInViewModel.getFileInfoInDrive()
             }
         }, onError: { error in
@@ -98,7 +114,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
             switch error {
             case .invalid_credential:
-                return log("login lagi gih sono")
+                return log("Error credential")
             default:
                 return
             }
@@ -138,7 +154,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             signInViewModel.getTokenResponse(using: isGoogleUrl.1!) { result in
                 switch result {
                 case .success(let success):
-                    log("token is --> \(success.accessToken)")
                     self.driveController.accessToken = success.accessToken
                     self.showNotification(message: "Google account connected")
                     self.signInViewModel.requestProfile(idToken: success.idToken)
@@ -174,7 +189,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         NSApplication.shared.unhide(self)
     }
 
-    func openPreferencesWindow(tabDefault: Tab) {
+    func openPreferencesWindow(tabDefault: Tab?) {
+        checkGoogleAuthEnable()
+        checkUpdateAvailable()
         userDefaultController.saveNotes(notes: mainViewModel.notes)
         signInViewModel.tabDefault = .constant(tabDefault)
 

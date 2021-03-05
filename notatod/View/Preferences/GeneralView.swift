@@ -7,6 +7,7 @@ import SwiftUI
 
 struct GeneralView: View {
     @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+
     let appDelegate: AppDelegate? = NSApplication.shared.delegate as? AppDelegate
 
     enum TaggedTheme: String {
@@ -16,7 +17,7 @@ struct GeneralView: View {
     }
 
     @State var theme = TaggedTheme.auto
-    @State var isAutoStart = false
+    @State var isLaunchAtLogin = false
 
     var body: some View {
         HStack(alignment: .top) {
@@ -35,9 +36,9 @@ struct GeneralView: View {
 
                 Divider()
 
-                Toggle(isOn: $isAutoStart) {
-                    Text("Launch on mac start")
-                }.frame(alignment: .leading).frame(alignment: .top)
+                Toggle("Launch at login", isOn: $isLaunchAtLogin)
+                        .frame(alignment: .leading).frame(alignment: .top)
+                        .disabled(true)
 
                 Button(action: {
                     NSApplication.shared.terminate(self)

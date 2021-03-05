@@ -30,7 +30,7 @@ struct NoteMapper {
             if isInvalidCredential {
                 onInvalid(.invalid_credential)
             } else  {
-                onInvalid(.invalidResponse)
+                onInvalid(.invalid_response)
             }
         }
     }

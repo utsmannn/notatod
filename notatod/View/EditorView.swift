@@ -61,7 +61,7 @@ struct EditorView: View {
                         .tooltip("New note (cmd+n)")
 
                 Button(action: {
-                    appDelegate?.openPreferencesWindow(tabDefault: .account)
+                    appDelegate?.openPreferencesWindow(tabDefault: nil)
                 }, label: {
                     Image(systemName: mainViewModel.hasLogon == true ? "link.icloud.fill" : "xmark.icloud.fill")
                             .resizable()
@@ -71,7 +71,7 @@ struct EditorView: View {
                         .tooltip(mainViewModel.hasLogon == true ? "Account connected" : "Account not connected")
 
                 Button(action: {
-                    appDelegate?.openPreferencesWindow(tabDefault: .general)
+                    appDelegate?.openPreferencesWindow(tabDefault: nil)
                 }, label: {
                     Image(systemName: "slider.vertical.3")
                             .resizable()

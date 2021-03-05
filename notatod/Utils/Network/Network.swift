@@ -109,7 +109,7 @@ struct Network {
 
             let task = session.dataTask(with: request) { data, response, error in
                 guard let data = data else {
-                    network.error = Error.invalidResponse
+                    network.error = Error.invalid_response
                     network.semaphore.signal()
                     log("\(request.httpMethod!) | \(request.url!) | RESPONSE ERROR -> \(error!) \n --- END --- \n\n")
                     return

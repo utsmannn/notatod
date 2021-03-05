@@ -39,6 +39,12 @@ class UserDefaultController {
         defaults.string(forKey: ID_FILE)
     }
 
+    func clearDriveData() {
+        defaults.removeObject(forKey: ACCESS_TOKEN)
+        defaults.removeObject(forKey: ID_TOKEN)
+        defaults.removeObject(forKey: ID_FILE)
+    }
+
     func saveNotes(notes: [NoteEntity]) {
         let csvContent = NoteMapper.notesToTextCsv(notes: notes)
         defaults.set(csvContent, forKey: NOTES)

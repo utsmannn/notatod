@@ -8,12 +8,17 @@ import SwiftUI
 class GoogleSignInViewModel: NSObject, ObservableObject {
     var userDefaultController: UserDefaultController
     var driveController: DriveController
+    var featureApiController: FeatureApiController
 
     @Published var logonStatus: LogonStatus = LogonStatus.not_sign_in
 
     @Published var profile: ProfileEntity?
-    @Published var tabDefault: Binding<Tab> = .constant(.general)
+    @Published var tabDefault: Binding<Tab?> = .constant(nil)
     @Published var fileInfo: DriveResponse.FileInfo? = nil
+
+    @Published var version: VersionResponse.MacOs?
+    @Published var isUpdateAvailable: Bool = false
+    @Published var isGoogleAuthEnable: Bool = true
 
     private let clientId = GoogleConfig.CLIENT_ID
     private let secretId = GoogleConfig.SECRET_ID
@@ -21,9 +26,10 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
     private let redirectUri = GoogleConfig.REDIRECT_URI
     private let session = URLSession.shared
 
-    init(userDefaultController: UserDefaultController, driveController: DriveController) {
+    init(userDefaultController: UserDefaultController, driveController: DriveController, featureApiController: FeatureApiController) {
         self.userDefaultController = userDefaultController
         self.driveController = driveController
+        self.featureApiController = featureApiController
         super.init()
     }
 
@@ -76,7 +82,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
         let codeOnly = false
 
         guard let code = code(from: redirectUrl) else {
-            completion(.failure(.codeNotFoundInRedirectURL))
+            completion(.failure(.code_not_found_in_redirect_URL))
             return
         }
 
@@ -113,7 +119,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
                         completion(.success(response))
                     } catch {
                         log(error)
-                        completion(.failure(.decodingError(error)))
+                        completion(.failure(.decoding_error(error)))
                     }
                 }.onFailure { error in
                     completion(.failure(error))
