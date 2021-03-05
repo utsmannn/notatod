@@ -14,5 +14,6 @@
 - [ ] Enable launch at login
 - [ ] Image inserting
 - [ ] Markdown support
+- [ ] Update readme doc
 
 ---
