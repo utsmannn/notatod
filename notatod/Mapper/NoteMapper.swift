@@ -21,6 +21,20 @@ struct NoteMapper {
         return cvsFormatString
     }
 
+    static func validateIsCsv(stringCsv: String, onValid: @escaping () -> (), onInvalid: @escaping (Error) -> ()) {
+        let isValid = stringCsv.contains("id,date,title,body")
+        if isValid {
+            onValid()
+        } else {
+            let isInvalidCredential = stringCsv.contains("\"reason\": \"authError\",")
+            if isInvalidCredential {
+                onInvalid(.invalid_credential)
+            } else  {
+                onInvalid(.invalidResponse)
+            }
+        }
+    }
+
     static func stringCsvToNotes(stringCsv: String) -> [NoteEntity] {
         var result: [[String]] = []
         let rows = stringCsv.components(separatedBy: "\n")

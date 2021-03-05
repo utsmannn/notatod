@@ -76,7 +76,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
 
     func getFileInDrive() {
-        mainViewModel.getFileInDrive { success in
+        log("hah---------")
+        mainViewModel.getFileInDrive(onSuccess: { success in
             log("drive -> \(success)")
             if !success {
                 if self.userDefaultController.notes().isEmpty {
@@ -88,9 +89,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                     self.mainViewModel.setSelectionId(selectionId: self.mainViewModel.notes[0].id)
                 }
             } else {
+                log("hmmm----------------------")
                 self.signInViewModel.getFileInfoInDrive()
             }
-        }
+        }, onError: { error in
+            self.mainViewModel.notes = self.userDefaultController.notes()
+            self.mainViewModel.setSelectionId(selectionId: self.mainViewModel.notes[0].id)
+
+            switch error {
+            case .invalid_credential:
+                return log("login lagi gih sono")
+            default:
+                return
+            }
+        })
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

@@ -7,7 +7,5 @@ target 'notatod' do
 
   # Pods for notatod
   pod 'KeyboardShortcuts'
-  pod 'RxSwift', '6.1.0'
-  pod 'RxCocoa', '6.1.0'
 
 end

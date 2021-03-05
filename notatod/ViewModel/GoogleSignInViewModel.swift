@@ -39,7 +39,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "scope", value: scopes),
             URLQueryItem(name: "redirect_uri", value: redirectUri),
-            URLQueryItem(name: "access_type", value: "offline")
+            URLQueryItem(name: "access_type", value: "online")
         ]
         return components.url!
     }
@@ -73,7 +73,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
     func getTokenResponse(using redirectUrl: URL, completion: @escaping (Result<TokenResponse, Error>) -> Void) {
         // Debug only for get code
         // set false for release
-        let codeOnly = true
+        let codeOnly = false
 
         guard let code = code(from: redirectUrl) else {
             completion(.failure(.codeNotFoundInRedirectURL))
@@ -131,6 +131,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
                         self.statusAuth = .sign_in_success
                     } catch {
                         log("error decode: \(error)")
+                        self.profile = nil
                         self.statusAuth = .sign_in_failed
                     }
                     log(data.asString())

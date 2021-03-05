@@ -101,7 +101,6 @@ struct Network {
 
             request.httpMethod = methodString
             request.addValue(contentTypeValue, forHTTPHeaderField: "Content-Type")
-            log("type value --> \(contentTypeValue)")
             if authorizationKey != "" {
                 request.addValue(authorizationKey, forHTTPHeaderField: "Authorization")
             }
@@ -112,16 +111,12 @@ struct Network {
                 guard let data = data else {
                     network.error = Error.invalidResponse
                     network.semaphore.signal()
-                    if network.enableDebugPrint {
-                        log(error!)
-                    }
+                    log("\(request.httpMethod!) | \(request.url!) | RESPONSE ERROR -> \(error!) \n --- END --- \n\n")
                     return
                 }
 
                 network.data = data
-                if network.enableDebugPrint {
-                    log("NETWORK - DATA RESPONSE: \(String(data: data, encoding: .utf8)!)")
-                }
+                log("\(request.httpMethod!) | \(request.url!) | RESPONSE SUCCESS -> \(String(data: data, encoding: .utf8)!) \n --- END -- \n\n")
                 network.semaphore.signal()
             }
 

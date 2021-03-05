@@ -44,8 +44,11 @@ class DriveController {
                     guard let stringResponse = String(data: data, encoding: .utf8) else {
                         return
                     }
-                    log(stringResponse)
-                    onSuccess(stringResponse)
+                    NoteMapper.validateIsCsv(stringCsv: stringResponse, onValid: {
+                        onSuccess(stringResponse)
+                    }, onInvalid: { error in
+                        onError(error)
+                    })
                 }.onFailure { error in
                     onError(Error.networkError(error))
                 }
@@ -109,6 +112,7 @@ class DriveController {
         networkTask?.request(path: pathSearch, method: .get)
                 .start()
                 .onSuccess { data in
+                    log("mulaiiiiii--------------------------")
                     do {
                         let filesResponse: DriveResponse.Files = try data.decodeData()
                         let files = filesResponse.files
@@ -119,9 +123,11 @@ class DriveController {
                         let fileFound = files[index]
                         onSuccess(fileFound)
                     } catch {
+                        log("error di sini......")
                         onError(.decodingError(error))
                     }
                 }.onFailure { error in
+                    log("hhhhhhhhhhhhhhh")
                     onError(.invalidResponse)
                 }
     }

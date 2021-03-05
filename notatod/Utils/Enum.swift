@@ -9,6 +9,7 @@ enum Error: Swift.Error {
     case networkError(Swift.Error)
     case invalidResponse
     case decodingError(Swift.Error)
+    case invalid_credential
 }
 
 enum Method: String {

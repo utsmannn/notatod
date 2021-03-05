@@ -95,27 +95,27 @@ class MainViewModel: ObservableObject, Equatable {
         }
     }
 
-    func getFileInDrive(done: @escaping (Bool) -> ()) {
+    func getFileInDrive(onSuccess: @escaping (Bool) -> (), onError: @escaping (Error) -> ()) {
         log("file id ---> \(userDefaultController.fileId())")
         let fileId = userDefaultController.fileId()
 
         if userDefaultController.accessToken() == nil {
-            done(false)
+            onSuccess(false)
         } else {
             if fileId == nil {
                 driveController.searchNoteFile(onSuccess: { file in
                     self.userDefaultController.saveFileId(fileId: file.id)
-                    self.getFile(fileId: file.id, done: done)
+                    self.getFile(fileId: file.id, onSuccess: onSuccess, onError: onError)
                 }, onError: { error in
-                    done(false)
+                    onError(error)
                 })
             } else {
-                getFile(fileId: fileId!, done: done)
+                getFile(fileId: fileId!, onSuccess: onSuccess, onError: onError)
             }
         }
     }
 
-    private func getFile(fileId: String, done: @escaping (Bool) -> ()) {
+    private func getFile(fileId: String, onSuccess: @escaping (Bool) -> (), onError: @escaping (Error) -> ()) {
         driveController.getFileCsv(fileId: fileId, onSuccess: { s in
             var entities = NoteMapper.stringCsvToNotes(stringCsv: s)
             let existingNote = self.userDefaultController.notes()
@@ -131,10 +131,10 @@ class MainViewModel: ObservableObject, Equatable {
             self.userDefaultController.saveNotes(notes: entities)
             self.notes = self.userDefaultController.notes()
             self.setSelectionId(selectionId: self.notes[0].id)
-            done(true)
+            onSuccess(true)
         }, onError: { error in
-            done(false)
-            log(error)
+            onError(error)
+            log("error --> \(error)")
         })
     }
 }
