@@ -3,6 +3,9 @@
 
 ![](/images/img1.png)
 
+## Download
+Go to [release page](https://github.com/utsmannn/notatod/releases)
+
 ## Feature
 - [x] Simple editor
 - [x] Font size customizable
