@@ -14,15 +14,15 @@ struct AccountView: View {
                 Image("Gdrive")
                         .resizable()
                         .frame(width: 100, height: 70)
-                logonLeftView(logonStatus: signInViewModel.statusAuth)
+                logonLeftView(logonStatus: signInViewModel.logonStatus)
             }
-            logonRightView(logonStatus: signInViewModel.statusAuth)
+            logonRightView(logonStatus: signInViewModel.logonStatus)
 
         }.padding()
     }
 
     private func logonLeftView(logonStatus: LogonStatus) -> AnyView {
-        switch signInViewModel.statusAuth {
+        switch signInViewModel.logonStatus {
         case .sign_in, .sign_in_success:
             return AnyView(VStack {
                 Text("You have logged in")
@@ -52,7 +52,7 @@ struct AccountView: View {
     }
 
     private func logonRightView(logonStatus: LogonStatus) -> AnyView {
-        switch signInViewModel.statusAuth {
+        switch signInViewModel.logonStatus {
         case .sign_in, .sign_in_success:
             return AnyView(HStack {
                 Divider().padding()

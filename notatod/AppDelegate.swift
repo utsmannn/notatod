@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
         mainViewModel = MainViewModel(driveController: driveController, userDefaultController: userDefaultController)
         if signInViewModel.profile != nil {
-            signInViewModel.statusAuth = .sign_in
+            signInViewModel.logonStatus = .sign_in
         }
 
         mainViewModel.hasLogon = signInViewModel.profile != nil
@@ -149,7 +149,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                     self.showNotification(message: "Google account failed")
                 }
 
-                log(self.signInViewModel.statusAuth)
+                log(self.signInViewModel.logonStatus)
             }
         }
     }

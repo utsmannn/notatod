@@ -9,7 +9,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
     var userDefaultController: UserDefaultController
     var driveController: DriveController
 
-    @Published var statusAuth: LogonStatus = LogonStatus.not_sign_in
+    @Published var logonStatus: LogonStatus = LogonStatus.not_sign_in
 
     @Published var profile: ProfileEntity?
     @Published var tabDefault: Binding<Tab> = .constant(.general)
@@ -128,16 +128,16 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
                     do {
                         let profileResponse: ProfileResponse = try data.decodeData()
                         self.profile = profileResponse.mapToEntity()
-                        self.statusAuth = .sign_in_success
+                        self.logonStatus = .sign_in_success
                     } catch {
                         log("error decode: \(error)")
                         self.profile = nil
-                        self.statusAuth = .sign_in_failed
+                        self.logonStatus = .sign_in_failed
                     }
                     log(data.asString())
                 }.onFailure { error in
                     log(error)
-                    self.statusAuth = .sign_in_failed
+                    self.logonStatus = .sign_in_failed
                 }
     }
 
