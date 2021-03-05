@@ -7,7 +7,7 @@ import SwiftUI
 
 struct UpdateView: View {
     @EnvironmentObject var signInViewModel: GoogleSignInViewModel
-
+// git submodule add <url> notatod-update-server
     var body: some View {
         HStack {
             VStack {
