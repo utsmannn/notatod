@@ -10,6 +10,7 @@ Go to [release page](https://github.com/utsmannn/notatod/releases)
 - [x] Simple editor
 - [x] Font size customizable
 - [x] Preferences menu
+- [x] Simple ui
 
 ## Roadmap
 - [ ] Synchronized with Google Drive (Under verification auth api)
@@ -18,5 +19,6 @@ Go to [release page](https://github.com/utsmannn/notatod/releases)
 - [ ] Image inserting
 - [ ] Markdown support
 - [ ] Update readme doc
+- [ ] Mobile client support
 
 ---
