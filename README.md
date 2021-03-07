@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1508982173255-9864289f25a1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=80"/>
+  <img src=""/>
 </p>
 
 <p align="center">
@@ -20,7 +20,7 @@
 |![](images/img1.png)|![](images/img2.png)|
 
 ## Download
-Go to [release page](https://github.com/utsmannn/notatod/releases)
+Go to [release page](https://github.com/utsmannn/notatod/releases) and download *.dmg asset of the latest release
 ```
 Version 1.1.0-alpha-2 (latest version)
 - Add backward compability until Catalina
