@@ -79,12 +79,9 @@ struct AccountView: View {
                     if dateApi == nil {
                         EmptyView()
                     } else {
-                        //let dateString = dateApi!.iso8601withFractionalSeconds!.asStringFormat()
                         let dateString = dateApi?.dropLast(7).string.replacingOccurrences(of: "T", with: " ")
                         let date = dateString?.dateNow?.asStringFormat()
-                        Text("Last edit: \(date!)").onAppear {
-                            log(date)
-                        }
+                        Text("Last edit: \(date!)")
                     }
                 }
             })

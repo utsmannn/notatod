@@ -13,6 +13,7 @@ struct ImageButtonStyle: ButtonStyle {
 }
 
 struct EditorView: View {
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var mainViewModel: MainViewModel
     @State var entities: NoteEntity
 
@@ -38,13 +39,11 @@ struct EditorView: View {
 
         return VStack(spacing: 0) {
             VStack(spacing: 0) {
-                TextEditor(text: titleBinding)
-                        .font(.system(size: CGFloat(mainViewModel.fontSize * 2)))
+                TextEditorCatalina(text: titleBinding, font: .systemFont(ofSize: CGFloat(mainViewModel.fontSize * 2), weight: .bold))
                         .frame(height: CGFloat(mainViewModel.fontSize * 4))
                         .frame(alignment: .top)
 
-                TextEditor(text: bodyBinding)
-                        .font(.system(size: CGFloat(mainViewModel.fontSize * 1.2)))
+                TextEditorCatalina(text: bodyBinding, font: .systemFont(ofSize: CGFloat(mainViewModel.fontSize * 1.2)))
                         .frame(alignment: .top)
 
             }.padding()
@@ -53,29 +52,38 @@ struct EditorView: View {
                 Button(action: {
                     mainViewModel.addNewNote()
                 }, label: {
-                    Image(systemName: "doc.text")
+                    Image("ControlAddDocument")
+                            .renderingMode(.template)
                             .resizable()
-                            .frame(width: 16, height: 20)
+                            .frame(width: 20, height: 20)
+                            .colorMultiply(colorScheme == .dark ? Color.white : Color.black)
+
                 }).frame(alignment: .leading)
                         .buttonStyle(ImageButtonStyle())
-                        .tooltip("New note (cmd+n)")
+                        .tooltip("New note")
 
                 Button(action: {
-                    appDelegate?.openPreferencesWindow(tabDefault: nil)
+                    appDelegate?.openAccountWindow()
                 }, label: {
-                    Image(systemName: mainViewModel.hasLogon == true ? "link.icloud.fill" : "xmark.icloud.fill")
+                    Image(mainViewModel.hasLogon == true ? "ControlCloudOn" : "ControlCloudOf")
+                            .renderingMode(.template)
                             .resizable()
-                            .frame(width: 25, height: 18)
+                            .frame(width: 20, height: 20)
+                            .colorMultiply(colorScheme == .dark ? Color.white : Color.black)
+
                 }).frame(alignment: .leading).padding([.trailing, .leading])
                         .buttonStyle(ImageButtonStyle())
                         .tooltip(mainViewModel.hasLogon == true ? "Account connected" : "Account not connected")
 
                 Button(action: {
-                    appDelegate?.openPreferencesWindow(tabDefault: nil)
+                    appDelegate?.openPreferencesWindow()
                 }, label: {
-                    Image(systemName: "slider.vertical.3")
+                    Image("ControlSettings")
+                            .renderingMode(.template)
                             .resizable()
-                            .frame(width: 18, height: 20)
+                            .frame(width: 20, height: 20)
+                            .colorMultiply(colorScheme == .dark ? Color.white : Color.black)
+
                 }).frame(alignment: .leading)
                         .buttonStyle(ImageButtonStyle())
                         .tooltip("Open preferences")
@@ -87,6 +95,19 @@ struct EditorView: View {
                     Text("A+")
                     Slider(value: fontBinding, in: 1...50, step: 5)
                     Text("A-")
+
+                    Divider().frame(height: 22)
+                    Button(action: {
+                        appDelegate?.changeSize()
+                    }, label: {
+                        Image("ControlWindow")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .colorMultiply(colorScheme == .dark ? Color.white : Color.black)
+                    }).frame(alignment: .leading)
+                            .buttonStyle(ImageButtonStyle())
+                            .tooltip("Change window size")
                 }
                 Spacer().frame(width: 20)
                 if mainViewModel.hasLogon == true {
@@ -102,12 +123,15 @@ struct EditorView: View {
                             appDelegate?.showNotification(message: message)
                         }
                     }, label: {
-                        Image(systemName: "icloud.and.arrow.up.fill")
+                        Image("ControlSaveDrive")
+                                .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 25, height: 20)
+                                .frame(width: 20, height: 20)
+                                .colorMultiply(colorScheme == .dark ? Color.white : Color.black)
                     }).frame(alignment: .leading)
                             .buttonStyle(ImageButtonStyle())
                             .tooltip("Upload to drive")
+
                 }
 
             }.frame(alignment: .bottomLeading).padding().onAppear {

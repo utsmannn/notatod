@@ -23,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     var statusBarItem: NSStatusItem!
     var popover: NSPopover!
     var preferencesWindow: NSWindow!
+    var accountWindow: NSWindow!
 
     typealias UserNotification = NSUserNotification
     typealias UserNotificationCenter = NSUserNotificationCenter
@@ -43,9 +44,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                 featureApiController: featureApiController
         )
 
-        checkGoogleAuthEnable()
-        checkUpdateAvailable()
-
         driveController.accessToken = signInViewModel.getAccessToken()
         mainViewModel = MainViewModel(driveController: driveController, userDefaultController: userDefaultController)
         if signInViewModel.profile != nil {
@@ -58,11 +56,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                 .environmentObject(mainViewModel)
 
         UserNotificationCenter.default.delegate = self
-
         statusBarItem = NSStatusBar.system.statusItem(withLength: 28)
 
         let popover = NSPopover()
-        popover.contentSize = NSSize(width: 800, height: 400)
+
+        if userDefaultController.popoverWindowSize() == 2 {
+            popover.contentSize = NSSize(width: 1000, height: 600)
+        } else {
+            popover.contentSize = NSSize(width: 800, height: 400)
+        }
+
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(rootView: contentView)
         self.popover = popover
@@ -75,6 +78,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         }
 
         NSApp.activate(ignoringOtherApps: true)
+
+        checkGoogleAuthEnable()
+        checkUpdateAvailable()
     }
 
     func checkUpdateAvailable() {
@@ -189,11 +195,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         NSApplication.shared.unhide(self)
     }
 
-    func openPreferencesWindow(tabDefault: Tab?) {
+    func openPreferencesWindow() {
         checkGoogleAuthEnable()
         checkUpdateAvailable()
         userDefaultController.saveNotes(notes: mainViewModel.notes)
-        signInViewModel.tabDefault = .constant(tabDefault)
 
         if preferencesWindow == nil {
             let preferencesView = PreferencesView()
@@ -216,9 +221,45 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         NSApp.activate(ignoringOtherApps: true)
     }
 
+    func openAccountWindow() {
+        checkGoogleAuthEnable()
+        checkUpdateAvailable()
+        userDefaultController.saveNotes(notes: mainViewModel.notes)
+
+        if accountWindow == nil {
+            let accountView = AccountView()
+                    .environmentObject(signInViewModel)
+
+            let windowView = NSHostingController(rootView: accountView)
+            accountWindow = NSWindow(
+                    contentRect: NSRect(x: 0, y: 0, width: 300, height: 240),
+                    styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+                    backing: .buffered, defer: false)
+            accountWindow.title = "Account"
+            accountWindow.center()
+            accountWindow.setFrameAutosaveName("Account")
+            accountWindow.isReleasedWhenClosed = false
+            accountWindow.contentView = windowView.view
+            accountWindow.appearance = userDefaultController.theme()
+        }
+
+        accountWindow.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
     func changeThemeNow() {
         popover.appearance = userDefaultController.theme()
         preferencesWindow.appearance = userDefaultController.theme()
+    }
+
+    func changeSize() {
+        if userDefaultController.popoverWindowSize() == 1 {
+            popover.contentSize = NSSize(width: 1000, height: 600)
+            userDefaultController.savePopoverWindow(typeSize: 2)
+        } else {
+            popover.contentSize = NSSize(width: 800, height: 400)
+            userDefaultController.savePopoverWindow(typeSize: 1)
+        }
     }
 
 }

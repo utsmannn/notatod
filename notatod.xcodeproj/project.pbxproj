@@ -19,6 +19,7 @@
 		CE3F94FE5ACF383ECA4AB2C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE3F92E9BD4EFCE799D72577 /* Assets.xcassets */; };
 		CE3F94FEF2249C6A902CC77F /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F978E4509FAAD9680BF44 /* StringExt.swift */; };
 		CE3F95677F1DB86DE68EF8A3 /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9C2FECE2BFFC762341D7 /* ProfileResponse.swift */; };
+		CE3F9599B9A25A76D5B6E81A /* TextEditorCatalina.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F92F134BC218743897D89 /* TextEditorCatalina.swift */; };
 		CE3F959C6C83814345ED80FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F958FE927CAD9B49F7346 /* AppDelegate.swift */; };
 		CE3F95BBBC2CF0679FA12B33 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9314274B0F8D7140BDF7 /* MainViewModel.swift */; };
 		CE3F961C55346E66CF0B0743 /* ProfileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F96AFDBEF7A253C627D10 /* ProfileEntity.swift */; };
@@ -67,6 +68,7 @@
 		CE3F9245F6C44FE4D88C75ED /* NoteEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEntity.swift; sourceTree = "<group>"; };
 		CE3F92D8394546783ADC9752 /* ViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		CE3F92E9BD4EFCE799D72577 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE3F92F134BC218743897D89 /* TextEditorCatalina.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorCatalina.swift; sourceTree = "<group>"; };
 		CE3F92F23796C4D9438BEA0F /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		CE3F9314274B0F8D7140BDF7 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CE3F937BAE962C861598D33E /* TokenResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				CE3F9A18111123401A99E599 /* EditorView.swift */,
 				CE3F95173F958BCB96A33D6C /* PreferencesView.swift */,
 				CE3F9812FCE298A4B15A662B /* Preferences */,
+				CE3F92F134BC218743897D89 /* TextEditorCatalina.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				CE3F9EF1D2FEBDDABFC498C2 /* ChangelogEntity.swift in Sources */,
 				CE3F91BC203CAC88F0C4A078 /* VersionMapper.swift in Sources */,
 				CE3F9D06413D5B9DFC3C367B /* README.md in Sources */,
+				CE3F9599B9A25A76D5B6E81A /* TextEditorCatalina.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,7 +490,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = notatod/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utsman.notatod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -564,7 +568,7 @@
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = notatod/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.utsman.notatod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum Error: Swift.Error {
     case code_not_found_in_redirect_URL

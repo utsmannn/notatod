@@ -60,8 +60,6 @@ struct GeneralView: View {
                 .onAppear {
                     theme = getTaggedFromAppearance(appearance: signInViewModel.userDefaultController.theme())
                 }
-
-
     }
 
     private func getImageTheme(taggedTheme: TaggedTheme) -> String {

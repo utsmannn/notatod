@@ -14,6 +14,7 @@ class UserDefaultController {
     private let ID_FILE = "\(TAG)_file_id"
     private let NOTES = "\(TAG)_notes"
     private let THEMES = "\(TAG)_themes"
+    private let POPOVER_WINDOW = "\(TAG)_popover_window"
 
     func saveAccessToken(accessToken: String) {
         defaults.set(accessToken, forKey: ACCESS_TOKEN)
@@ -78,5 +79,13 @@ class UserDefaultController {
         default:
             return nil
         }
+    }
+
+    func savePopoverWindow(typeSize: Int) {
+        defaults.set(typeSize, forKey: POPOVER_WINDOW)
+    }
+
+    func popoverWindowSize() -> Int {
+        defaults.integer(forKey: POPOVER_WINDOW)
     }
 }
