@@ -7,9 +7,10 @@ import SwiftUI
 
 struct PreferencesView: View {
     @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+    @State var tab = Tab.general
 
     var body: some View {
-        TabView(selection: signInViewModel.tabDefault) {
+        TabView(selection: $tab) {
             GeneralView()
                     .tabItem {
                         Text("General")
@@ -22,6 +23,10 @@ struct PreferencesView: View {
                     .tabItem {
                         Text("Update")
                     }.tag(Tab.update)
-        }.padding().frame(height: 240)
+            AboutView()
+                    .tabItem {
+                        Text("About")
+                    }.tag(Tab.about)
+        }.padding().frame(height: 340)
     }
 }

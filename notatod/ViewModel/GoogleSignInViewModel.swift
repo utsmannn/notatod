@@ -13,7 +13,6 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
     @Published var logonStatus: LogonStatus = LogonStatus.not_sign_in
 
     @Published var profile: ProfileEntity?
-    @Published var tabDefault: Binding<Tab?> = .constant(nil)
     @Published var fileInfo: DriveResponse.FileInfo? = nil
 
     @Published var version: VersionResponse.MacOs?
@@ -68,6 +67,9 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
         config.hides = true
         NSWorkspace.shared.open(signInPageURL, configuration: config) { application, error in
             NSApplication.shared.hide(self)
+            if error != nil {
+                log(error!)
+            }
         }
     }
 
@@ -164,6 +166,12 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
         }, onError: { error in
             self.fileInfo = nil
         })
+    }
+
+    func versionName() -> String {
+        let versionName = NSApplication.shared.AppVersionName ?? "Unknown"
+        let versionCode = NSApplication.shared.AppVersion ?? "Unknown"
+        return "Version \(versionName) (\(versionCode))"
     }
 }
 

@@ -7,9 +7,11 @@ import SwiftUI
 
 struct AccountView: View {
     @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+    private let featureMessage = "If you are going to participate as tester of this feature, please send me an email or contact me on github and tell me your gmail address"
+    private let email = "mailto:utsmannn@gmail.com"
+    private let github = "https://github.com/utsmannn"
 
     var body: some View {
-
         HStack {
             if signInViewModel.isGoogleAuthEnable {
                 VStack {
@@ -56,11 +58,38 @@ struct AccountView: View {
                 })
             })
         default:
-            return AnyView(Button(action: {
-                signInViewModel.signIn()
-            }, label: {
-                Text("Sign in with Google")
-            }))
+            return AnyView(HStack {
+                VStack(alignment: .leading) {
+                    Spacer()
+                    Button(action: {
+                        signInViewModel.signIn()
+                    }, label: {
+                        Text("Sign in with Google")
+                    })
+                    Text("Sync and save your notes on google drive")
+                    Spacer()
+                    Text("""
+                         Attention! 
+                         This feature currently on testing!
+                         """)
+                            .bold()
+                    Spacer()
+                }
+                Divider().padding()
+                VStack(alignment: .leading) {
+                    Text(featureMessage)
+                    Button(action: {
+                        email.clickUrl()
+                    }, label: {
+                        Text("Send me email")
+                    })
+                    Button(action: {
+                        github.clickUrl()
+                    }, label: {
+                        Text("Text me on github")
+                    })
+                }
+            })
         }
     }
 
@@ -81,9 +110,18 @@ struct AccountView: View {
                     } else {
                         let dateString = dateApi?.dropLast(7).string.replacingOccurrences(of: "T", with: " ")
                         let date = dateString?.dateNow?.asStringFormat()
-                        Text("Last edit: \(date!)")
+                        Text("""
+                             Last edit: 
+                             \(date!)
+                             """)
+                                .font(.footnote)
+                        Text("""
+                             File name on your Google Drive: 
+                             notatod_content.csv
+                             """)
+                                .font(.footnote)
                     }
-                }
+                }.padding(.vertical)
             })
         default:
             return AnyView(EmptyView())

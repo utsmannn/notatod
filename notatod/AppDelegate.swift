@@ -206,7 +206,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
             let windowView = NSHostingController(rootView: preferencesView)
             preferencesWindow = NSWindow(
-                    contentRect: NSRect(x: 0, y: 0, width: 480, height: 200),
+                    contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
                     styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
                     backing: .buffered, defer: false)
             preferencesWindow.title = "Preferences"
@@ -228,11 +228,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
         if accountWindow == nil {
             let accountView = AccountView()
+                    .frame(width: 480, height: 300)
                     .environmentObject(signInViewModel)
 
             let windowView = NSHostingController(rootView: accountView)
             accountWindow = NSWindow(
-                    contentRect: NSRect(x: 0, y: 0, width: 300, height: 240),
+                    contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
                     styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
                     backing: .buffered, defer: false)
             accountWindow.title = "Account"

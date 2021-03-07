@@ -29,4 +29,5 @@ enum Tab: Hashable {
     case general
     case account
     case update
+    case about
 }

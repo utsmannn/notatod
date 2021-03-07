@@ -20,41 +20,44 @@ struct GeneralView: View {
     @State var isLaunchAtLogin = false
 
     var body: some View {
-        HStack(alignment: .top) {
+        VStack(alignment: .leading) {
+            HStack {
+                VStack(alignment: .leading) {
+                    Picker(selection: $theme, label: Text("Theme application: ")) {
+                        Text("Dark").tag(TaggedTheme.dark)
+                        Text("Light").tag(TaggedTheme.light)
+                        Text("Auto").tag(TaggedTheme.auto)
+                    }.frame(maxWidth: 400).onReceive([theme].publisher.first()) { (v: TaggedTheme) in
+                        log("changed -> \(v)")
+                        let nsAppearance = taggedToNSAppearance(taggedTheme: v)
+                        signInViewModel.userDefaultController.setTheme(name: nsAppearance?.name)
+                        appDelegate?.changeThemeNow()
+                    }
 
-            VStack(alignment: .leading) {
-                Picker(selection: $theme, label: Text("Theme application: ")) {
-                    Text("Dark").tag(TaggedTheme.dark)
-                    Text("Light").tag(TaggedTheme.light)
-                    Text("Auto").tag(TaggedTheme.auto)
-                }.frame(maxWidth: 400).onReceive([theme].publisher.first()) { (v: TaggedTheme) in
-                    log("changed -> \(v)")
-                    let nsAppearance = taggedToNSAppearance(taggedTheme: v)
-                    signInViewModel.userDefaultController.setTheme(name: nsAppearance?.name)
-                    appDelegate?.changeThemeNow()
+                    Divider()
+
+                    Toggle("Launch at login", isOn: $isLaunchAtLogin)
+                            .frame(alignment: .leading).frame(alignment: .top)
+                            .disabled(true)
+
+                    Button(action: {
+                        NSApplication.shared.terminate(self)
+                    }, label: {
+                        Text("Exit application")
+                    }).padding(.top)
+                    Spacer()
                 }
-
-                Divider()
-
-                Toggle("Launch at login", isOn: $isLaunchAtLogin)
-                        .frame(alignment: .leading).frame(alignment: .top)
-                        .disabled(true)
-
-                Button(action: {
-                    NSApplication.shared.terminate(self)
-                }, label: {
-                    Text("Exit application")
-                }).padding(.top)
+                Spacer().frame(width: 20)
+                ZStack {
+                    Image(getImageTheme(taggedTheme: theme))
+                            .resizable()
+                            .cornerRadius(8).padding(1)
+                }.frame(width: 120, height: 120)
+                        .background((theme == TaggedTheme.dark ? Color.white : Color.gray).cornerRadius(8))
 
             }
-            Spacer().frame(width: 20)
-            ZStack {
-                Image(getImageTheme(taggedTheme: theme))
-                        .resizable()
-                        .cornerRadius(8).padding(1)
-            }.frame(width: 120, height: 120)
-                    .background((theme == TaggedTheme.dark ? Color.white : Color.gray).cornerRadius(8))
-
+            Text(signInViewModel.versionName())
+                    .font(.footnote)
         }
                 .padding()
                 .onAppear {

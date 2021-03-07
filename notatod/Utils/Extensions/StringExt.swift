@@ -6,13 +6,13 @@ import Foundation
 import SwiftUI
 
 extension String {
-    subscript (bounds: CountableClosedRange<Int>) -> String {
+    subscript(bounds: CountableClosedRange<Int>) -> String {
         let start = index(startIndex, offsetBy: bounds.lowerBound)
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return String(self[start...end])
     }
 
-    subscript (bounds: CountableRange<Int>) -> String {
+    subscript(bounds: CountableRange<Int>) -> String {
         let start = index(startIndex, offsetBy: bounds.lowerBound)
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return String(self[start..<end])
@@ -32,14 +32,25 @@ extension String {
     /*var iso8601withFractionalSeconds: Date? {
         Formatter.iso8601withFractionalSeconds.date(from: self)
     }*/
-     var dateNow: Date? {
-         let formatter = DateFormatter()
-         formatter.timeZone = TimeZone(abbreviation: "GMT")
-         formatter.dateFormat = "yyyy-MM-dd HH:mm"
-         return formatter.date(from: self)
-     }
+    var dateNow: Date? {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        return formatter.date(from: self)
+    }
+
+    func clickUrl() {
+        let url = URL(string: self)
+        let config = NSWorkspace.OpenConfiguration()
+        NSWorkspace.shared.open(url!, configuration: config) { application, error in
+            log("opening: \(self)")
+        }
+    }
+
 }
 
 extension LosslessStringConvertible {
-    var string: String { .init(self) }
+    var string: String {
+        .init(self)
+    }
 }

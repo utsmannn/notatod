@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7D088F03575C3FCF4E9D0EEC /* Pods_notatod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA003B3F01EE648804F3FDD /* Pods_notatod.framework */; };
+		CE3F907D0D80D991B0C7C173 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F97471FE22D31EB3A685A /* AboutView.swift */; };
 		CE3F916BF53CC23C2C2D46C9 /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F908821EE5EE4E56E4A56 /* EditorViewModel.swift */; };
 		CE3F91BC203CAC88F0C4A078 /* VersionMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F95A6FC1E8BBD453C6479 /* VersionMapper.swift */; };
 		CE3F91F09334A8645070CF70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9D56716EB24E0DF4402A /* ContentView.swift */; };
@@ -83,6 +84,7 @@
 		CE3F96179469191ABE965D8A /* NumExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumExt.swift; sourceTree = "<group>"; };
 		CE3F962A803024F50FBC989B /* Tooltip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tooltip.swift; sourceTree = "<group>"; };
 		CE3F96AFDBEF7A253C627D10 /* ProfileEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEntity.swift; sourceTree = "<group>"; };
+		CE3F97471FE22D31EB3A685A /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		CE3F978E4509FAAD9680BF44 /* StringExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		CE3F97B688D0C586A2142ECD /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		CE3F97EC97A5A90EFECE804C /* CollectionExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExt.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				CE3F9E6C42AB1D142E0B3C6A /* GeneralView.swift */,
 				CE3F915330A04F9D7AC40C17 /* AccountView.swift */,
 				CE3F9FF4273FFE0B1A6EF387 /* UpdateView.swift */,
+				CE3F97471FE22D31EB3A685A /* AboutView.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				CE3F91BC203CAC88F0C4A078 /* VersionMapper.swift in Sources */,
 				CE3F9D06413D5B9DFC3C367B /* README.md in Sources */,
 				CE3F9599B9A25A76D5B6E81A /* TextEditorCatalina.swift in Sources */,
+				CE3F907D0D80D991B0C7C173 /* AboutView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,7 +535,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CLIENT_ID = "your-client-id";
+				CLIENT_ID = "736390409372-imu2t0a2ojbn56abc6pj0q0iv1qjn59i";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -548,7 +552,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
-				SECRET_ID = "your-secret-id";
+				SECRET_ID = NnbkdO1bk35LAozO3DIMuGh0;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
@@ -610,7 +614,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CLIENT_ID = "your-client-id";
+				CLIENT_ID = "736390409372-imu2t0a2ojbn56abc6pj0q0iv1qjn59i";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -634,7 +638,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SECRET_ID = "your-secret-id";
+				SECRET_ID = NnbkdO1bk35LAozO3DIMuGh0;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
