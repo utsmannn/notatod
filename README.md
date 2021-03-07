@@ -1,9 +1,11 @@
-<p align="center">
+<div align="center">
+  <img src="https://i.ibb.co/2Wq0495/ic-launcher.png" width="100" height="100"/>
+
   <h1 align="center">notatod</h1>
-</p>
+</div>
 
 <p align="center">
-  <img src=""/>
+  <img src="https://images.unsplash.com/photo-1505968409348-bd000797c92e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"/>
 </p>
 
 <p align="center">
@@ -48,7 +50,7 @@ Version 1.0.0-alpha-1
 - [ ] Keyboard shortcut
 - [ ] Enable launch at login
 - [ ] Image inserting
-- [ ] Markdown support
+- [ ] Code highlighter
 - [ ] Mobile client support
 
 ## Build with
