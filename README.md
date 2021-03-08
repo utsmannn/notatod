@@ -27,7 +27,7 @@
 
 ## Compatibility
 - This app work with 10.15 (Catalina or later)
-- Work with Intel arch 86_64
+- Work with Intel arch x86_64
 - Work with Apple Silicon M1
 
 ## Download
