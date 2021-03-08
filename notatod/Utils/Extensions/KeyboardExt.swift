@@ -6,6 +6,7 @@ import Foundation
 import KeyboardShortcuts
 
 extension KeyboardShortcuts.Name {
-    static let newNote = Self("new_note", default: .init(.f8))
-    static let saveNote = Self("save_note", default: .init(.f7))
+    static let openNote = Self("open_note", default: .init(.o, modifiers: [.command, .option, .control]))
+    static let newNote = Self("new_note", default: .init(.n, modifiers: [.command, .option, .control]))
+    static let saveNote = Self("save_note", default: .init(.s, modifiers: [.command, .option, .control]))
 }

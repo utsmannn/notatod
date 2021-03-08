@@ -27,6 +27,7 @@ struct PreferencesView: View {
                     .tabItem {
                         Text("About")
                     }.tag(Tab.about)
-        }.padding().frame(height: 340)
+        }
+                .padding()
     }
 }

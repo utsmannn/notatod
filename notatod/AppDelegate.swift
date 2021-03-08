@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     var popover: NSPopover!
     var preferencesWindow: NSWindow!
     var accountWindow: NSWindow!
+    var startingWindow: NSWindow!
 
     typealias UserNotification = NSUserNotification
     typealias UserNotificationCenter = NSUserNotificationCenter
@@ -32,6 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // uncomment for see UserDefaultData
+        openStartingWindow()
         for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
             if key.contains(UserDefaultController.TAG) {
                 log("\n\(key) : \n\(value) \n")
@@ -81,6 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
         checkGoogleAuthEnable()
         checkUpdateAvailable()
+        setupKeyboardShortcut()
     }
 
     func checkUpdateAvailable() {
@@ -134,11 +137,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
 
     func setupKeyboardShortcut() {
+        KeyboardShortcuts.onKeyUp(for: .openNote) {
+            self.togglePopover(nil)
+        }
         KeyboardShortcuts.onKeyUp(for: .newNote) {
-            self.userDefaultController.saveNotes(notes: self.mainViewModel.notes)
             self.mainViewModel.addNewNote()
+            self.togglePopover(nil)
         }
         KeyboardShortcuts.onKeyUp(for: .saveNote) {
+            self.mainViewModel.userDefaultController.saveNotes(notes: self.mainViewModel.notes)
+
             if self.mainViewModel.hasLogon == true {
                 self.mainViewModel.uploadToDrive { b in
                     var message = ""
@@ -149,8 +157,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                     }
                     self.showNotification(message: message)
                 }
+            } else  {
+                self.showNotification(message: "Success saved on local")
             }
-            self.mainViewModel.userDefaultController.saveNotes(notes: self.mainViewModel.notes)
         }
     }
 
@@ -192,7 +201,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         notification.informativeText = message
         notification.soundName = UserNotificationDefaultSoundName
         UserNotificationCenter.default.deliver(notification)
-        NSApplication.shared.unhide(self)
+    }
+
+    func openStartingWindow() {
+        if startingWindow == nil {
+            let startingView = StartingView()
+            let windowView = NSHostingController(rootView: startingView)
+
+            startingWindow = NSWindow(
+                    contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
+                    styleMask: [.titled, .closable],
+                    backing: .buffered, defer: false)
+            startingWindow.title = "notatod!"
+            startingWindow.center()
+            startingWindow.setFrameAutosaveName("Preferences")
+            startingWindow.isReleasedWhenClosed = false
+            startingWindow.contentView = windowView.view
+            startingWindow.appearance = userDefaultController.theme()
+        }
+
+        startingWindow.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     func openPreferencesWindow() {
@@ -206,8 +235,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
             let windowView = NSHostingController(rootView: preferencesView)
             preferencesWindow = NSWindow(
-                    contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
-                    styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+                    contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
+                    styleMask: [.titled, .closable],
                     backing: .buffered, defer: false)
             preferencesWindow.title = "Preferences"
             preferencesWindow.center()
@@ -234,7 +263,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             let windowView = NSHostingController(rootView: accountView)
             accountWindow = NSWindow(
                     contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-                    styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+                    styleMask: [.titled, .closable],
                     backing: .buffered, defer: false)
             accountWindow.title = "Account"
             accountWindow.center()

@@ -19,6 +19,10 @@ struct GeneralView: View {
     @State var theme = TaggedTheme.auto
     @State var isLaunchAtLogin = false
 
+    private let shortcutOpen = ["⌘", "⌥", "⌃", "O"]
+    private let shortcutNewNote = ["⌘", "⌥", "⌃", "N"]
+    private let shortcutSaveNote = ["⌘", "⌥", "⌃", "S"]
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -46,6 +50,7 @@ struct GeneralView: View {
                         Text("Exit application")
                     }).padding(.top)
                     Spacer()
+                    Divider()
                 }
                 Spacer().frame(width: 20)
                 ZStack {
@@ -54,10 +59,39 @@ struct GeneralView: View {
                             .cornerRadius(8).padding(1)
                 }.frame(width: 120, height: 120)
                         .background((theme == TaggedTheme.dark ? Color.white : Color.gray).cornerRadius(8))
-
             }
+
+            VStack(alignment: .leading) {
+                Text("Shortcut:")
+                        .bold()
+                        .padding(.bottom, 7)
+                HStack {
+                    Text("Open/toggle notes")
+                            .frame(width: 120, alignment: .leading)
+                    Text(" : ")
+                    ShortcutView(keys: shortcutOpen)
+                }
+                HStack {
+                    Text("New notes")
+                            .frame(width: 120, alignment: .leading)
+                    Text(" : ")
+                    ShortcutView(keys: shortcutNewNote)
+                }.padding(.vertical, 3)
+                HStack {
+                    Text("Save notes")
+                            .frame(width: 120, alignment: .leading)
+                    Text(" : ")
+                    ShortcutView(keys: shortcutSaveNote)
+                }
+            }
+
+            Spacer()
+            Spacer()
+
             Text(signInViewModel.versionName())
                     .font(.footnote)
+                    .frame(alignment: .trailing)
+
         }
                 .padding()
                 .onAppear {

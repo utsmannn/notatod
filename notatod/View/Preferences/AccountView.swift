@@ -122,6 +122,7 @@ struct AccountView: View {
                                 .font(.footnote)
                     }
                 }.padding(.vertical)
+
             })
         default:
             return AnyView(EmptyView())
