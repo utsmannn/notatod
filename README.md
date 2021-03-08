@@ -21,6 +21,15 @@
 |---|---|
 |![](images/img1.png)|![](images/img2.png)|
 
+|drive account connected|note file in drive|
+|---|---|
+|![](images/img3.png)|![](images/img4.png)|
+
+## Compatibility
+- This app work with 10.15 (Catalina or later)
+- Work with Intel arch 86_64
+- Work with Apple Silicon M1
+
 ## Download
 Go to [release page](https://github.com/utsmannn/notatod/releases) and download *.dmg asset of the latest release
 ```
