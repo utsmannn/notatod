@@ -26,14 +26,19 @@
 |![](images/img3.png)|![](images/img4.png)|
 
 ## Compatibility
-- This app work with 10.15 (Catalina or later)
+- This app work with 10.15 (Catalina) or later
 - Work with Intel arch x86_64
 - Work with Apple Silicon M1
 
 ## Download
 Go to [release page](https://github.com/utsmannn/notatod/releases) and download *.dmg asset of the latest release
 ```
-Version 1.1.0-alpha-2 (latest version)
+Version 1.1.0-alpha-3 (latest version)
+- Add keyboard shortcut
+- Add window when app open
+- Add Google OAuth2 performance
+
+Version 1.1.0-alpha-2
 - Add backward compability until Catalina
 - Add resize popover window
 - Enable google drive sync (internal tester)
