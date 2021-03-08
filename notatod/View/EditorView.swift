@@ -109,7 +109,6 @@ struct EditorView: View {
                             .buttonStyle(ImageButtonStyle())
                             .tooltip("Change window size")
                 }
-                Spacer().frame(width: 20)
                 if mainViewModel.hasLogon == true {
                     Divider().frame(height: 22)
                     Button(action: {

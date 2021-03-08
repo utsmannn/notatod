@@ -54,18 +54,23 @@ Version 1.0.0-alpha-1
 - [x] Preferences menu
 - [x] Simple ui
 - [x] Synchronized with Google Drive (internal testing)
+- [x] Keyboard shortcut
 
 ## Roadmap
-- [ ] Keyboard shortcut
 - [ ] Enable launch at login
 - [ ] Image inserting
 - [ ] Code highlighter
 - [ ] Mobile client support
 
 ## Build with
+- Swift
 - SwiftUI
-- Xcode + AppCode
-- Kotlin Ktor updater API
+- AppCode + XCode
+- MVVM Clean Arch
+- Google OAuth2 API (REST)
+- Google Drive API (REST)
+- KeyboardShortcuts (by [Sindre Sorhus](https://github.com/sindresorhus/KeyboardShortcuts))
+- Kotlin Ktor for updater API
 
 ## License
 ```

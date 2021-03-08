@@ -66,13 +66,13 @@ struct GeneralView: View {
                         .bold()
                         .padding(.bottom, 7)
                 HStack {
-                    Text("Open/toggle notes")
+                    Text("Open/toggle note")
                             .frame(width: 120, alignment: .leading)
                     Text(" : ")
                     ShortcutView(keys: shortcutOpen)
                 }
                 HStack {
-                    Text("New notes")
+                    Text("New note")
                             .frame(width: 120, alignment: .leading)
                     Text(" : ")
                     ShortcutView(keys: shortcutNewNote)
