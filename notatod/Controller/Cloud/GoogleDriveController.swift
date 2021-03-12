@@ -4,7 +4,7 @@
 
 import Foundation
 
-class DriveController {
+class GoogleDriveController {
     var accessToken: String?
     private let pathUpload = "/upload/drive/v3/files?uploadType=multipart"
     private let pathUpdate = "/upload/drive/v2/files"

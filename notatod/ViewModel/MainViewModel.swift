@@ -17,10 +17,10 @@ class MainViewModel: ObservableObject, Equatable {
 
     @Published var fileInfo: DriveResponse.FileInfo? = nil
 
-    var driveController: DriveController
+    var driveController: GoogleDriveController
     var userDefaultController: UserDefaultController
 
-    init(driveController: DriveController, userDefaultController: UserDefaultController) {
+    init(driveController: GoogleDriveController, userDefaultController: UserDefaultController) {
         self.driveController = driveController
         self.userDefaultController = userDefaultController
     }

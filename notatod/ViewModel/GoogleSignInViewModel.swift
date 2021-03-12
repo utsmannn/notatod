@@ -7,7 +7,7 @@ import SwiftUI
 
 class GoogleSignInViewModel: NSObject, ObservableObject {
     var userDefaultController: UserDefaultController
-    var driveController: DriveController
+    var driveController: GoogleDriveController
     var featureApiController: FeatureApiController
 
     @Published var logonStatus: LogonStatus = LogonStatus.not_sign_in
@@ -25,7 +25,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
     private let redirectUri = GoogleConfig.REDIRECT_URI
     private let session = URLSession.shared
 
-    init(userDefaultController: UserDefaultController, driveController: DriveController, featureApiController: FeatureApiController) {
+    init(userDefaultController: UserDefaultController, driveController: GoogleDriveController, featureApiController: FeatureApiController) {
         self.userDefaultController = userDefaultController
         self.driveController = driveController
         self.featureApiController = featureApiController

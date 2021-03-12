@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7D088F03575C3FCF4E9D0EEC /* Pods_notatod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA003B3F01EE648804F3FDD /* Pods_notatod.framework */; };
 		CE3F907D0D80D991B0C7C173 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F97471FE22D31EB3A685A /* AboutView.swift */; };
+		CE3F909E73A3315A99CE132E /* GoogleDriveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F967B8FAF30CCCB79330D /* GoogleDriveController.swift */; };
 		CE3F916BF53CC23C2C2D46C9 /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F908821EE5EE4E56E4A56 /* EditorViewModel.swift */; };
 		CE3F91BC203CAC88F0C4A078 /* VersionMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F95A6FC1E8BBD453C6479 /* VersionMapper.swift */; };
 		CE3F91F09334A8645070CF70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9D56716EB24E0DF4402A /* ContentView.swift */; };
@@ -40,6 +41,7 @@
 		CE3F99F3AE3E1E5B1FAADCBF /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9FF4273FFE0B1A6EF387 /* UpdateView.swift */; };
 		CE3F9A37E38B130C3516C7CF /* GoogleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9932860A6D3DB3E4B896 /* GoogleConfig.swift */; };
 		CE3F9B5905B7347DECA215DE /* MainExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9C6E306A74DD166B4F86 /* MainExt.swift */; };
+		CE3F9BEE3126965B18082114 /* DropBoxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F91C8EA08E59E38B7D343 /* DropBoxController.swift */; };
 		CE3F9BF034D176AD5DA7BF60 /* NoteMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F903526021FD8F95C488A /* NoteMapper.swift */; };
 		CE3F9C05E176A76302EF273C /* FeatureApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9DD8B2F372C5144A8E3C /* FeatureApiController.swift */; };
 		CE3F9C11073E45BE1D885BE2 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F95173F958BCB96A33D6C /* PreferencesView.swift */; };
@@ -55,7 +57,6 @@
 		CE3F9EF1D2FEBDDABFC498C2 /* ChangelogEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F998B7AE98CF0AEA72F28 /* ChangelogEntity.swift */; };
 		CE3F9FB60D72B524348C194D /* VersionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F908C1B6CF3B9EA2D17E7 /* VersionResponse.swift */; };
 		CE3F9FDC73E1EDE2E7E12FFB /* NoteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F954F2444D70B7861312B /* NoteResponse.swift */; };
-		CE3F9FF5AB7449C3006FAFA1 /* DriveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F956E1A919B107145EC85 /* DriveController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		CE3F9101972410E05645A977 /* GoogleSignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewModel.swift; sourceTree = "<group>"; };
 		CE3F915330A04F9D7AC40C17 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		CE3F918DD53B63D6F13139CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		CE3F91C8EA08E59E38B7D343 /* DropBoxController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropBoxController.swift; sourceTree = "<group>"; };
 		CE3F9245F6C44FE4D88C75ED /* NoteEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEntity.swift; sourceTree = "<group>"; };
 		CE3F92D8394546783ADC9752 /* ViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		CE3F92E9BD4EFCE799D72577 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,10 +83,10 @@
 		CE3F94D3075F5A265D0AEEF0 /* Tooltip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tooltip.swift; sourceTree = "<group>"; };
 		CE3F95173F958BCB96A33D6C /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		CE3F954F2444D70B7861312B /* NoteResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteResponse.swift; sourceTree = "<group>"; };
-		CE3F956E1A919B107145EC85 /* DriveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveController.swift; sourceTree = "<group>"; };
 		CE3F958FE927CAD9B49F7346 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE3F95A6FC1E8BBD453C6479 /* VersionMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionMapper.swift; sourceTree = "<group>"; };
 		CE3F96179469191ABE965D8A /* NumExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumExt.swift; sourceTree = "<group>"; };
+		CE3F967B8FAF30CCCB79330D /* GoogleDriveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDriveController.swift; sourceTree = "<group>"; };
 		CE3F96AFDBEF7A253C627D10 /* ProfileEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEntity.swift; sourceTree = "<group>"; };
 		CE3F97471FE22D31EB3A685A /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		CE3F978E4509FAAD9680BF44 /* StringExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
@@ -208,8 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				CE3F9E7344B83812CC44A44E /* UserDefaultController.swift */,
-				CE3F956E1A919B107145EC85 /* DriveController.swift */,
 				CE3F9DD8B2F372C5144A8E3C /* FeatureApiController.swift */,
+				CE3F9C29312894F53AE9DE47 /* Cloud */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -303,6 +305,15 @@
 				CE3F95A6FC1E8BBD453C6479 /* VersionMapper.swift */,
 			);
 			path = Mapper;
+			sourceTree = "<group>";
+		};
+		CE3F9C29312894F53AE9DE47 /* Cloud */ = {
+			isa = PBXGroup;
+			children = (
+				CE3F91C8EA08E59E38B7D343 /* DropBoxController.swift */,
+				CE3F967B8FAF30CCCB79330D /* GoogleDriveController.swift */,
+			);
+			path = Cloud;
 			sourceTree = "<group>";
 		};
 		CE3F9C4AC72E69923E544135 /* ViewModel */ = {
@@ -460,7 +471,6 @@
 				CE3F961C55346E66CF0B0743 /* ProfileEntity.swift in Sources */,
 				CE3F98B880853ED72AD9E040 /* ProfileMapper.swift in Sources */,
 				CE3F9BF034D176AD5DA7BF60 /* NoteMapper.swift in Sources */,
-				CE3F9FF5AB7449C3006FAFA1 /* DriveController.swift in Sources */,
 				CE3F9DC808AF8DB56125D9F8 /* DriveResponse.swift in Sources */,
 				CE3F96AD07F55E9AED7337BF /* KeyboardExt.swift in Sources */,
 				CE3F989566AB00598E650053 /* Enum.swift in Sources */,
@@ -481,6 +491,8 @@
 				CE3F968CAF67442F228BD06B /* StartingView.swift in Sources */,
 				CE3F97EB3166C99CE2B090C3 /* Tooltip.swift in Sources */,
 				CE3F98374C46F6BE6DC96625 /* ShortcutView.swift in Sources */,
+				CE3F9BEE3126965B18082114 /* DropBoxController.swift in Sources */,
+				CE3F909E73A3315A99CE132E /* GoogleDriveController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

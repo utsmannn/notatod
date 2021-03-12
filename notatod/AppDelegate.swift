@@ -14,7 +14,7 @@ import KeyboardShortcuts
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
 
     let userDefaultController = UserDefaultController()
-    let driveController = DriveController()
+    let driveController = GoogleDriveController()
     let featureApiController = FeatureApiController()
 
     var signInViewModel: GoogleSignInViewModel!
@@ -165,6 +165,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func application(_ application: NSApplication, open urls: [URL]) {
         let isGoogleUrl = signInViewModel.expectGoogleUserUrl(url: urls)
+        log("url incoming ... -> \(urls.map { url -> String in url.absoluteString })")
         if isGoogleUrl.0 {
             signInViewModel.getTokenResponse(using: isGoogleUrl.1!) { result in
                 switch result {
