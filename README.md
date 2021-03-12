@@ -63,7 +63,7 @@ Version 1.0.0-alpha-1
 
 ## Roadmap
 - [ ] Enable launch at login
-- [ ] Add DropBox API for alternative Google Drive API
+- [ ] Add Dropbox API for Google Drive API alternative
 - [ ] Image inserting
 - [ ] Code highlighter
 - [ ] Mobile client support
