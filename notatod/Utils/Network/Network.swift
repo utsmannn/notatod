@@ -78,7 +78,7 @@ struct Network {
             if methodString == Method.get.rawValue {
                 path.append("?\(key)=\(value)")
             } else {
-                bodyString.append("\(key)=\(value)")
+                bodyString.append("&\(key)=\(value)")
             }
 
             return self
@@ -106,36 +106,68 @@ struct Network {
             }
             request.httpBody = bodyData
 
+            DispatchQueue.global(qos: .background).async {
+                let task = self.session.dataTask(with: request) { data, response, error in
+                    guard let data = data else {
+                        network.error = Error.invalid_response
+                        network.semaphore.signal()
+                        log("\(request.httpMethod!) | \(request.url!) | RESPONSE ERROR -> \(error!) \n --- END --- \n\n")
+                        return
+                    }
 
-            let task = session.dataTask(with: request) { data, response, error in
-                guard let data = data else {
-                    network.error = Error.invalid_response
+                    network.data = data
+                    log("\(request.httpMethod!) | \(request.url!) | RESPONSE SUCCESS -> \(String(data: data, encoding: .utf8)!) \n --- END -- \n\n")
                     network.semaphore.signal()
-                    log("\(request.httpMethod!) | \(request.url!) | RESPONSE ERROR -> \(error!) \n --- END --- \n\n")
-                    return
                 }
 
-                network.data = data
-                log("\(request.httpMethod!) | \(request.url!) | RESPONSE SUCCESS -> \(String(data: data, encoding: .utf8)!) \n --- END -- \n\n")
-                network.semaphore.signal()
+                task.resume()
             }
-
-            task.resume()
             network.semaphore.wait()
             return network
+        }
+
+        func start(completion: @escaping (Result<Data, Error>) -> ()) {
+            var request = URLRequest(url: URL(string: "\(baseUrl)\(path)")!, timeoutInterval: Double.infinity)
+            let bodyData = bodyString.data(using: .utf8, allowLossyConversion: false)
+
+            request.httpMethod = methodString
+            request.addValue(contentTypeValue, forHTTPHeaderField: "Content-Type")
+            if authorizationKey != "" {
+                request.addValue(authorizationKey, forHTTPHeaderField: "Authorization")
+            }
+            request.httpBody = bodyData
+
+            DispatchQueue.global(qos: .background).async {
+                let task = self.session.dataTask(with: request) { data, response, error in
+                    guard let data = data else {
+                        log("\(request.httpMethod!) | \(request.url!) | RESPONSE ERROR -> \(error!) \n --- END --- \n\n")
+                        completion(.failure(.invalid_response))
+                        return
+                    }
+
+                    log("\(request.httpMethod!) | \(request.url!) | RESPONSE SUCCESS -> \(String(data: data, encoding: .utf8)!) \n --- END -- \n\n")
+                    completion(.success(data))
+                }
+
+                task.resume()
+            }
         }
     }
 
     func onSuccess(success: @escaping (Data) -> ()) -> Network {
-        success(data)
+        DispatchQueue.global(qos: .utility).async {
+            success(data)
+        }
         return self
     }
 
     func onFailure(failure: @escaping (Error) -> ()) {
-        guard let error = error else {
-            return
+        DispatchQueue.global(qos: .utility).async {
+            guard let error = error else {
+                return
+            }
+            failure(error)
         }
-        failure(error)
     }
 }
 

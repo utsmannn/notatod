@@ -6,14 +6,14 @@ import Foundation
 import SwiftUI
 
 struct AccountView: View {
-    @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     private let featureMessage = "If you are going to participate as tester of this feature, please send me an email or contact me on github and tell me your gmail address"
     private let email = "mailto:utsmannn@gmail.com"
     private let github = "https://github.com/utsmannn"
 
     var body: some View {
         HStack {
-            if signInViewModel.isGoogleAuthEnable {
+            /*if signInViewModel.isGoogleAuthEnable {
                 VStack {
                     Image("Gdrive")
                             .resizable()
@@ -29,14 +29,21 @@ struct AccountView: View {
                     Divider()
                     Text("Google Drive feature not yet available")
                 }
+            }*/
+            VStack {
+                Image("Gdrive")
+                        .resizable()
+                        .frame(width: 100, height: 70)
+                Divider()
+                Text("Google Drive feature not yet available")
             }
 
         }.padding().onAppear {
-            log("sign in available ----> \(signInViewModel.isGoogleAuthEnable)")
+            //log("sign in available ----> \(signInViewModel.isGoogleAuthEnable)")
         }
     }
 
-    private func logonLeftView(logonStatus: LogonStatus) -> AnyView {
+    /*private func logonLeftView(logonStatus: LogonStatus) -> AnyView {
         switch signInViewModel.logonStatus {
         case .sign_in, .sign_in_success:
             return AnyView(VStack {
@@ -127,5 +134,5 @@ struct AccountView: View {
         default:
             return AnyView(EmptyView())
         }
-    }
+    }*/
 }

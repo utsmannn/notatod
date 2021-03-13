@@ -17,12 +17,18 @@ class MainViewModel: ObservableObject, Equatable {
 
     @Published var fileInfo: DriveResponse.FileInfo? = nil
 
-    var driveController: GoogleDriveController
-    var userDefaultController: UserDefaultController
+    var cloudApi: CloudApi
+    let userDefault = UserDefaultController()
+    var cloudDefault: CloudUserDefault!
 
-    init(driveController: GoogleDriveController, userDefaultController: UserDefaultController) {
-        self.driveController = driveController
-        self.userDefaultController = userDefaultController
+    init(cloudApi: CloudApi) {
+        switch userDefault.authType {
+        case .google:
+            cloudDefault = GoogleUserDefault()
+        case .dropbox:
+            cloudDefault = DropboxUserDefault()
+        }
+        self.cloudApi = cloudApi
     }
 
     func setupInitializer(entities: [NoteEntity]) {
@@ -65,12 +71,12 @@ class MainViewModel: ObservableObject, Equatable {
     }
 
     func hasUploaded() -> Bool {
-        userDefaultController.fileId() != nil
+        userDefault.fileId() != nil
     }
 
     func uploadToDrive(status: @escaping (Bool) -> ()) {
         let csvContent = NoteMapper.notesToTextCsv(notes: notes)
-        if userDefaultController.fileId() == nil {
+        /*if userDefaultController.fileId() == nil {
             driveController.initialUpload(
                     body: csvContent,
                     onSuccess: { upload in
@@ -92,11 +98,48 @@ class MainViewModel: ObservableObject, Equatable {
                 status(false)
                 log(error)
             })
-        }
+        }*/
     }
 
-    func getFileInDrive(onSuccess: @escaping (Bool) -> (), onError: @escaping (Error) -> ()) {
-        log("file id ---> \(userDefaultController.fileId())")
+    func searchFileInDrive() {
+        if cloudDefault.accessToken() != "" && userDefault.fileId() == nil {
+            cloudApi.searchNoteFile { result in
+                switch result {
+                case .success(let data):
+                    self.userDefault.saveFileId(fileId: data.id)
+                case .failure(let error):
+                    log(error)
+                }
+
+                self.getFile()
+            }
+        } else {
+            setLocalNotes()
+        }
+
+    }
+
+    private func setLocalNotes() {
+        if userDefault.notes().isEmpty {
+            notes = ConstantData.startingEntity()
+        } else  {
+            notes = userDefault.notes()
+        }
+        setSelectionId(selectionId: notes[0].id)
+    }
+
+    private func getFile() {
+        cloudApi.getNoteFile { result in
+            switch result {
+            case .success(let entities):
+                self.notes = entities
+                self.setSelectionId(selectionId: entities[0].id)
+            case .failure(let error):
+                log(error)
+                self.setLocalNotes()
+            }
+        }
+        /*log("file id ---> \(userDefaultController.fileId())")
         let fileId = userDefaultController.fileId()
 
         if userDefaultController.accessToken() == nil {
@@ -112,10 +155,10 @@ class MainViewModel: ObservableObject, Equatable {
             } else {
                 getFile(fileId: fileId!, onSuccess: onSuccess, onError: onError)
             }
-        }
+        }*/
     }
 
-    private func getFile(fileId: String, onSuccess: @escaping (Bool) -> (), onError: @escaping (Error) -> ()) {
+    /*private func getFile(fileId: String, onSuccess: @escaping (Bool) -> (), onError: @escaping (Error) -> ()) {
         driveController.getFileCsv(fileId: fileId, onSuccess: { s in
             var entities = NoteMapper.stringCsvToNotes(stringCsv: s)
             let existingNote = self.userDefaultController.notes()
@@ -136,5 +179,5 @@ class MainViewModel: ObservableObject, Equatable {
             onError(error)
             log("error --> \(error)")
         })
-    }
+    }*/
 }

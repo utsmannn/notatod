@@ -7,7 +7,7 @@ import Foundation
 class FeatureApiController {
 
     private let pathVersion = "/version"
-    private let pathFeature = "/feature"
+    private let pathFeature = "/v1/feature"
 
     private var networkTask: Network.NetworkTask? {
         NetworkBuilder(session: URLSession.shared)
@@ -30,19 +30,23 @@ class FeatureApiController {
                     log(error)
                 }
     }
-    
-    func isGoogleAuthEnable(onResult: @escaping (Bool) -> ()) {
+
+    func authServiceEnable(onResult: @escaping (AuthEnable) -> ()) {
         networkTask?.request(path: pathFeature, method: .get)
-                .start()
-                .onSuccess { data in
-                    do {
-                        let feature: FeatureResponse = try data.decodeData()
-                        let isGoogleAuthEnable = feature.googleAuth
-                        onResult(isGoogleAuthEnable)
-                    } catch {
-                        return
+                .start { result in
+                    switch result {
+                    case .success(let data):
+                        do {
+                            let response: FeatureResponse = try data.decodeData()
+                            let authService = response.asAuthEnable()
+                            onResult(authService)
+                        } catch {
+                            return
+                        }
+                    case .failure(let error):
+                        log(error)
+                        onResult(.disable)
                     }
-                }.onFailure { error in
                 }
     }
 }

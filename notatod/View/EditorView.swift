@@ -23,13 +23,13 @@ struct EditorView: View {
     var body: some View {
         let bodyBinding = entities.body.asBinding { s in
             entities.body = s
-            mainViewModel.userDefaultController.saveNotes(notes: mainViewModel.notes)
+            mainViewModel.userDefault.saveNotes(notes: mainViewModel.notes)
         }
 
         let titleBinding = entities.title.asBinding { s in
             entities.title = s
             mainViewModel.setSelectionId(selectionId: entities.id)
-            mainViewModel.userDefaultController.saveNotes(notes: mainViewModel.notes)
+            mainViewModel.userDefault.saveNotes(notes: mainViewModel.notes)
         }
 
         let fontBinding = fontSize.asBinding { v in

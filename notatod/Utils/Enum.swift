@@ -13,6 +13,34 @@ enum Error: Swift.Error {
     case invalid_credential
 }
 
+enum AuthTypeUrl<URL> {
+    case google(URL)
+    case dropbox(URL)
+    case none
+}
+
+enum AuthType: String {
+    case google = "google"
+    case dropbox = "dropbox"
+}
+
+enum AuthEnable {
+    case google
+    case dropbox
+    case disable
+}
+
+extension AuthType {
+    func enumAPI() -> String {
+        switch self {
+        case .google:
+            return "GOOGLE_DRIVE"
+        case .dropbox:
+            return "DROPBOX"
+        }
+    }
+}
+
 enum Method: String {
     case post = "POST"
     case get = "GET"

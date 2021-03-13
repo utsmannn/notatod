@@ -6,11 +6,11 @@ import Foundation
 import SwiftUI
 
 struct UpdateView: View {
-    @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
         HStack {
-            if signInViewModel.isUpdateAvailable {
+            /*if signInViewModel.isUpdateAvailable {
                 VStack(alignment: .leading) {
                     Text("Update available")
                             .bold()
@@ -29,7 +29,8 @@ struct UpdateView: View {
                 Spacer()
             } else {
                 Text("No update available")
-            }
+            }*/
+            Text("No update available")
         }.padding()
     }
 }

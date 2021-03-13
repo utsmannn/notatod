@@ -9,6 +9,8 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
     var userDefaultController: UserDefaultController
     var driveController: GoogleDriveController
     var featureApiController: FeatureApiController
+    var dropboxController: DropboxController
+    var gDriveController: GDriveController
 
     @Published var logonStatus: LogonStatus = LogonStatus.not_sign_in
 
@@ -25,15 +27,19 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
     private let redirectUri = GoogleConfig.REDIRECT_URI
     private let session = URLSession.shared
 
-    init(userDefaultController: UserDefaultController, driveController: GoogleDriveController, featureApiController: FeatureApiController) {
+    init(userDefaultController: UserDefaultController, driveController: GoogleDriveController, featureApiController: FeatureApiController, dropboxController: DropboxController, gDriveController: GDriveController) {
         self.userDefaultController = userDefaultController
         self.driveController = driveController
         self.featureApiController = featureApiController
+        self.dropboxController = dropboxController
+        self.gDriveController = gDriveController
         super.init()
     }
 
     private var signInPageURL: URL {
         let scopes = "https://www.googleapis.com/auth/drive profile email"
+
+        // https://accounts.google.com/o/oauth2/auth
 
         var components = URLComponents()
         components.scheme = "https"
@@ -65,6 +71,7 @@ class GoogleSignInViewModel: NSObject, ObservableObject {
         let config = NSWorkspace.OpenConfiguration()
         config.promptsUserIfNeeded = true
         config.hides = true
+        log("url ---> \n\(signInPageURL.absoluteString)")
         NSWorkspace.shared.open(signInPageURL, configuration: config) { application, error in
             NSApplication.shared.hide(self)
             if error != nil {

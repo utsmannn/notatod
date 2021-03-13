@@ -6,7 +6,7 @@ import Foundation
 import SwiftUI
 
 struct PreferencesView: View {
-    @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State var tab = Tab.general
 
     var body: some View {
@@ -15,18 +15,22 @@ struct PreferencesView: View {
                     .tabItem {
                         Text("General")
                     }.tag(Tab.general)
+                    .environmentObject(authViewModel)
             AccountView()
                     .tabItem {
                         Text("Account")
                     }.tag(Tab.account)
+                    .environmentObject(authViewModel)
             UpdateView()
                     .tabItem {
                         Text("Update")
                     }.tag(Tab.update)
+                    .environmentObject(authViewModel)
             AboutView()
                     .tabItem {
                         Text("About")
                     }.tag(Tab.about)
+                    .environmentObject(authViewModel)
         }
                 .padding()
     }

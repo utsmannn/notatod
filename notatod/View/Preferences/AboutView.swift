@@ -6,7 +6,7 @@ import Foundation
 import SwiftUI
 
 struct AboutView: View {
-    @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     private let developerName = "Muhammad Utsman"
     private let email = "mailto:utsmannn@gmail.com"
@@ -23,8 +23,8 @@ struct AboutView: View {
 
                 Text(NSApplication.shared.AppName ?? "Notatod")
                         .bold()
-                Text(signInViewModel.versionName())
-                        .font(.footnote)
+                /*Text(signInViewModel.versionName())
+                        .font(.footnote)*/
             }.padding()
             Divider().padding(.trailing).padding(.vertical)
             VStack(alignment: .leading) {
