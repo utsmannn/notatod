@@ -15,21 +15,21 @@ struct ImageButtonStyle: ButtonStyle {
 struct EditorView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var mainViewModel: MainViewModel
-    @State var entities: NoteEntity
+    @State var entity: NoteEntity
 
     let appDelegate: AppDelegate? = NSApplication.shared.delegate as? AppDelegate
     @State var fontSize: Double = 16
 
     var body: some View {
-        let bodyBinding = entities.body.asBinding { s in
-            entities.body = s
-            mainViewModel.userDefaultController.saveNotes(notes: mainViewModel.notes)
+        let titleBinding = entity.title.asBinding { s in
+            entity.title = s
+            mainViewModel.setSelectionId(selectionId: entity.id)
+            mainViewModel.userDefault.saveNotes(notes: mainViewModel.notes)
         }
 
-        let titleBinding = entities.title.asBinding { s in
-            entities.title = s
-            mainViewModel.setSelectionId(selectionId: entities.id)
-            mainViewModel.userDefaultController.saveNotes(notes: mainViewModel.notes)
+        let bodyBinding = entity.body.asBinding { s in
+            entity.body = s
+            mainViewModel.userDefault.saveNotes(notes: mainViewModel.notes)
         }
 
         let fontBinding = fontSize.asBinding { v in
@@ -39,12 +39,23 @@ struct EditorView: View {
 
         return VStack(spacing: 0) {
             VStack(spacing: 0) {
-                TextEditorCatalina(text: titleBinding, font: .systemFont(ofSize: CGFloat(mainViewModel.fontSize * 2), weight: .bold))
-                        .frame(height: CGFloat(mainViewModel.fontSize * 4))
-                        .frame(alignment: .top)
+                if #available(OSX 11.0, *) {
+                    TextEditor(text: titleBinding)
+                            .font(.system(size: CGFloat(mainViewModel.fontSize * 2)))
+                            .frame(height: CGFloat(mainViewModel.fontSize * 4))
+                            .frame(alignment: .top)
+                    TextEditor(text: bodyBinding)
+                            .font(.system(size: CGFloat(mainViewModel.fontSize * 1.2)))
+                            .frame(alignment: .top)
+                } else {
+                    // Fallback on earlier versions
+                    TextEditorCatalina(text: titleBinding, font: .systemFont(ofSize: CGFloat(mainViewModel.fontSize * 2), weight: .bold))
+                            .frame(height: CGFloat(mainViewModel.fontSize * 4))
+                            .frame(alignment: .top)
 
-                TextEditorCatalina(text: bodyBinding, font: .systemFont(ofSize: CGFloat(mainViewModel.fontSize * 1.2)))
-                        .frame(alignment: .top)
+                    TextEditorCatalina(text: bodyBinding, font: .systemFont(ofSize: CGFloat(mainViewModel.fontSize * 1.2)))
+                            .frame(alignment: .top)
+                }
 
             }.padding()
 

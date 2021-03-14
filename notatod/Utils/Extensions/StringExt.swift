@@ -29,9 +29,6 @@ extension String {
         return binding
     }
 
-    /*var iso8601withFractionalSeconds: Date? {
-        Formatter.iso8601withFractionalSeconds.date(from: self)
-    }*/
     var dateNow: Date? {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(abbreviation: "GMT")

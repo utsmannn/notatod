@@ -18,20 +18,6 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.1.0-alpha</string>
-	<key>CFBundleVersion</key>
-	<string>3</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-	<key>NSMainStoryboardFile</key>
-	<string>Main</string>
-	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
-	<key>LSUIElement</key>
-	<true/>
-	<key>ClientID</key>
-	<string>$(CLIENT_ID)</string>
-	<key>SecretID</key>
-	<string>$(SECRET_ID)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -41,8 +27,23 @@
 			<array>
 				<string>com.googleusercontent.apps.$(CLIENT_ID)</string>
 				<string>www.googleapis.com/oauth2/v4/token</string>
+				<string>notatod</string>
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>4</string>
+	<key>ClientID</key>
+	<string>$(CLIENT_ID)</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSMainStoryboardFile</key>
+	<string>Main</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>SecretID</key>
+	<string>$(SECRET_ID)</string>
 </dict>
 </plist>

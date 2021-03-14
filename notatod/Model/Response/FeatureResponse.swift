@@ -5,5 +5,5 @@
 import Foundation
 
 struct FeatureResponse: Codable, Equatable {
-    let googleAuth: Bool
+    let cloudServiceEnable: String
 }

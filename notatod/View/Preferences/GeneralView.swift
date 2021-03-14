@@ -6,7 +6,7 @@ import Foundation
 import SwiftUI
 
 struct GeneralView: View {
-    @EnvironmentObject var signInViewModel: GoogleSignInViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     let appDelegate: AppDelegate? = NSApplication.shared.delegate as? AppDelegate
 
@@ -34,7 +34,7 @@ struct GeneralView: View {
                     }.frame(maxWidth: 400).onReceive([theme].publisher.first()) { (v: TaggedTheme) in
                         log("changed -> \(v)")
                         let nsAppearance = taggedToNSAppearance(taggedTheme: v)
-                        signInViewModel.userDefaultController.setTheme(name: nsAppearance?.name)
+                        //signInViewModel.userDefaultController.setTheme(name: nsAppearance?.name)
                         appDelegate?.changeThemeNow()
                     }
 
@@ -88,14 +88,14 @@ struct GeneralView: View {
             Spacer()
             Spacer()
 
-            Text(signInViewModel.versionName())
+            /*Text(signInViewModel.versionName())
                     .font(.footnote)
-                    .frame(alignment: .trailing)
+                    .frame(alignment: .trailing)*/
 
         }
                 .padding()
                 .onAppear {
-                    theme = getTaggedFromAppearance(appearance: signInViewModel.userDefaultController.theme())
+                    //theme = getTaggedFromAppearance(appearance: signInViewModel.userDefaultController.theme())
                 }
     }
 

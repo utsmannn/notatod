@@ -18,7 +18,7 @@ struct ContentView: View {
                 List(mainViewModel.notes) { (note: NoteEntity) in
                     NavigationLink(destination: EditorView(
                             mainViewModel: mainViewModel,
-                            entities: note
+                            entity: note
                     ), tag: note.id, selection: $mainViewModel.selection) {
                         VStack(alignment: .leading) {
                             Spacer()

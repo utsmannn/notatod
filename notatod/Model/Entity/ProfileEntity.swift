@@ -4,7 +4,7 @@
 
 import Foundation
 
-class ProfileEntity : Identifiable, Equatable, Hashable {
+struct ProfileEntity : Equatable, Hashable {
 
     var email: String
     var name: String
@@ -19,13 +19,18 @@ class ProfileEntity : Identifiable, Equatable, Hashable {
     }
 
     static func ==(lhs: ProfileEntity, rhs: ProfileEntity) -> Bool {
-        lhs.email != rhs.email
-    }
-
-    init(email: String, name: String, givenName: String, pictureUrl: String) {
-        self.email = email
-        self.name = name
-        self.givenName = givenName
-        self.pictureUrl = pictureUrl
+        if lhs.email != rhs.email {
+            return false
+        }
+        if lhs.name != rhs.name {
+            return false
+        }
+        if lhs.givenName != rhs.givenName {
+            return false
+        }
+        if lhs.pictureUrl != rhs.pictureUrl {
+            return false
+        }
+        return true
     }
 }

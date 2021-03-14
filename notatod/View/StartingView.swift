@@ -7,8 +7,10 @@ import SwiftUI
 
 struct StartingView: View {
     let appDelegate: AppDelegate? = NSApplication.shared.delegate as? AppDelegate
+    @EnvironmentObject var startingViewModel: StartingViewModel
 
     var body: some View {
+
         VStack {
             HStack {
                 Image(nsImage: Bundle.main.image(forResource: "AppIcon") ?? NSImage())
@@ -20,12 +22,23 @@ struct StartingView: View {
                         .font(.title)
             }
             Text("Notes in your menu bar!")
-            Button(action: {
-                NSApplication.shared.sendAction(#selector(appDelegate?.togglePopover(_:)), to: nil, from: nil)
-            }, label: {
-                Text("Toggle note")
-            })
-            ShortcutView(keys: ["⌘", "⌥", "⌃", "O"])
+
+            if startingViewModel.isReady {
+                Button(action: {
+                    NSApplication.shared.sendAction(#selector(appDelegate?.togglePopover(_:)), to: nil, from: nil)
+                }, label: {
+                    Text("Toggle note")
+                })
+                ShortcutView(keys: ["⌘", "⌥", "⌃", "O"])
+            } else {
+                if #available(OSX 11.0, *) {
+                    ProgressView {
+                        Text("Preparing...")
+                    }
+                } else {
+                    Text("Preparing...").padding()
+                }
+            }
 
             Divider().padding(.top)
             Button(action: {

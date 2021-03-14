@@ -4,8 +4,14 @@
 
 import Foundation
 
-extension ProfileResponse {
+extension Google.ProfileResponse {
     func mapToEntity() -> ProfileEntity {
         ProfileEntity(email: email, name: name, givenName: givenName, pictureUrl: picture)
+    }
+}
+
+extension Dropbox.ProfileResponse {
+    func mapToEntity() -> ProfileEntity {
+        ProfileEntity(email: email, name: name.displayName, givenName: name.displayName, pictureUrl: profilePhotoUrl ?? "")
     }
 }

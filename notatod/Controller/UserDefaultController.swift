@@ -9,12 +9,30 @@ class UserDefaultController {
     private let defaults = UserDefaults.standard
 
     static let TAG = "NOTATOD_DEFAULT"
+    private let AUTH_TYPE = "\(TAG)_auth_type"
+
     private let ACCESS_TOKEN = "\(TAG)_access_token"
     private let ID_TOKEN = "\(TAG)_id_token"
     private let ID_FILE = "\(TAG)_file_id"
     private let NOTES = "\(TAG)_notes"
     private let THEMES = "\(TAG)_themes"
     private let POPOVER_WINDOW = "\(TAG)_popover_window"
+
+    func saveAuthType(authType: AuthType) {
+        defaults.set(authType.enumAPI(), forKey: AUTH_TYPE)
+    }
+
+    func authType() -> AuthType {
+        let savingTypeString = defaults.string(forKey: AUTH_TYPE) ?? AuthType.disable.enumAPI()
+        switch savingTypeString {
+        case AuthType.google.enumAPI():
+            return .google
+        case AuthType.dropbox.enumAPI():
+            return .dropbox
+        default:
+            return .disable
+        }
+    }
 
     func saveAccessToken(accessToken: String) {
         defaults.set(accessToken, forKey: ACCESS_TOKEN)
