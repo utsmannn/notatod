@@ -10,7 +10,6 @@
 		7D088F03575C3FCF4E9D0EEC /* Pods_notatod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA003B3F01EE648804F3FDD /* Pods_notatod.framework */; };
 		CE3F904F197662557A9AFC7C /* CloudUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F945CE5404CE79996E15B /* CloudUserDefault.swift */; };
 		CE3F907D0D80D991B0C7C173 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F97471FE22D31EB3A685A /* AboutView.swift */; };
-		CE3F909E73A3315A99CE132E /* GoogleDriveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F967B8FAF30CCCB79330D /* GoogleDriveController.swift */; };
 		CE3F90FB8C0BCBC345E77BD0 /* GoogleUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9E5381AB5939B31A189F /* GoogleUserDefault.swift */; };
 		CE3F912DF295D3C1BB6795EB /* TokenEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9A87168894956B5F22AA /* TokenEntity.swift */; };
 		CE3F916BF53CC23C2C2D46C9 /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F908821EE5EE4E56E4A56 /* EditorViewModel.swift */; };
@@ -25,9 +24,7 @@
 		CE3F9355337A7D57CA7727AD /* TokenMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F972AEAF0C814DD17CE66 /* TokenMapper.swift */; };
 		CE3F935CD2CC67FF30DB00C5 /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9D28777EFE9F869CA06B /* ConstantData.swift */; };
 		CE3F93E8B5AD2312B96E47D5 /* DropboxUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9D2BB9EC81C3F5472B81 /* DropboxUserDefault.swift */; };
-		CE3F9461BB6315F634F8A0EA /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9C67AA352874C36BE132 /* ProfileResponse.swift */; };
 		CE3F947DC2CF39E01A6EF1D1 /* FileMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F98447D81BA074C2355E9 /* FileMapper.swift */; };
-		CE3F94D9E4E4A56D1CE0520F /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F98F58F6CE05EBD781599 /* TokenResponse.swift */; };
 		CE3F94FE5ACF383ECA4AB2C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE3F92E9BD4EFCE799D72577 /* Assets.xcassets */; };
 		CE3F94FEF2249C6A902CC77F /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F978E4509FAAD9680BF44 /* StringExt.swift */; };
 		CE3F9599B9A25A76D5B6E81A /* TextEditorCatalina.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F92F134BC218743897D89 /* TextEditorCatalina.swift */; };
@@ -35,7 +32,6 @@
 		CE3F95BBBC2CF0679FA12B33 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9314274B0F8D7140BDF7 /* MainViewModel.swift */; };
 		CE3F961C55346E66CF0B0743 /* ProfileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F96AFDBEF7A253C627D10 /* ProfileEntity.swift */; };
 		CE3F9662F364CE3A5A5733AD /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9CEE5B659E67A1DB4A41 /* URLSessionProtocol.swift */; };
-		CE3F9678EFA988370485E53A /* GoogleSignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9101972410E05645A977 /* GoogleSignInViewModel.swift */; };
 		CE3F968CAF67442F228BD06B /* StartingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9856B11B9911D0018BD0 /* StartingView.swift */; };
 		CE3F96AD07F55E9AED7337BF /* KeyboardExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9DFF83A56F65E46C5312 /* KeyboardExt.swift */; };
 		CE3F96C5629B788D1C1877B7 /* FeatureResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9BE8A25BCB852EBBA5D1 /* FeatureResponse.swift */; };
@@ -46,6 +42,7 @@
 		CE3F98374C46F6BE6DC96625 /* ShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9DCDD7AEEE2C419A3FFA /* ShortcutView.swift */; };
 		CE3F987902E6FEDF3036B0AF /* Google.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F92304BFFEF03E1918836 /* Google.swift */; };
 		CE3F989566AB00598E650053 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F92F23796C4D9438BEA0F /* Enum.swift */; };
+		CE3F989E251227EFAF77E3C4 /* UploadEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9B2740956524251F18C6 /* UploadEntity.swift */; };
 		CE3F98B880853ED72AD9E040 /* ProfileMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F998C39BD1F8780D3989D /* ProfileMapper.swift */; };
 		CE3F98CAC95D475975039EE8 /* NumExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F96179469191ABE965D8A /* NumExt.swift */; };
 		CE3F9996CBDB5360BE880A79 /* CloudApiExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9676EEA87787A7075D7D /* CloudApiExt.swift */; };
@@ -64,7 +61,6 @@
 		CE3F9C9B4FE0C41A0A181AC8 /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F92D8394546783ADC9752 /* ViewExt.swift */; };
 		CE3F9D06413D5B9DFC3C367B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9EBEC8752CCE6E00045F /* README.md */; };
 		CE3F9D7076B8BE6BE6A4B244 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F915330A04F9D7AC40C17 /* AccountView.swift */; };
-		CE3F9DC808AF8DB56125D9F8 /* DriveResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9EBF4DE206E661B6BAAB /* DriveResponse.swift */; };
 		CE3F9E2DA5F9095FD0C33CB0 /* UrlExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F90A1C1AAA11A8D47D53D /* UrlExt.swift */; };
 		CE3F9E63A2B933A1989C511E /* DataExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F99E4E0B26A1310F084B1 /* DataExt.swift */; };
 		CE3F9E97854FABFB2ADFF7CC /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9E6C42AB1D142E0B3C6A /* GeneralView.swift */; };
@@ -82,7 +78,6 @@
 		CE3F908821EE5EE4E56E4A56 /* EditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewModel.swift; sourceTree = "<group>"; };
 		CE3F908C1B6CF3B9EA2D17E7 /* VersionResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionResponse.swift; sourceTree = "<group>"; };
 		CE3F90A1C1AAA11A8D47D53D /* UrlExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlExt.swift; sourceTree = "<group>"; };
-		CE3F9101972410E05645A977 /* GoogleSignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleSignInViewModel.swift; sourceTree = "<group>"; };
 		CE3F915330A04F9D7AC40C17 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		CE3F918DD53B63D6F13139CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		CE3F91C8EA08E59E38B7D343 /* DropboxController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropboxController.swift; sourceTree = "<group>"; };
@@ -105,7 +100,6 @@
 		CE3F95CF86F1BBA0F50916A8 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		CE3F96179469191ABE965D8A /* NumExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumExt.swift; sourceTree = "<group>"; };
 		CE3F9676EEA87787A7075D7D /* CloudApiExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudApiExt.swift; sourceTree = "<group>"; };
-		CE3F967B8FAF30CCCB79330D /* GoogleDriveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDriveController.swift; sourceTree = "<group>"; };
 		CE3F96AFDBEF7A253C627D10 /* ProfileEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEntity.swift; sourceTree = "<group>"; };
 		CE3F972AEAF0C814DD17CE66 /* TokenMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenMapper.swift; sourceTree = "<group>"; };
 		CE3F97471FE22D31EB3A685A /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -115,7 +109,6 @@
 		CE3F98447D81BA074C2355E9 /* FileMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMapper.swift; sourceTree = "<group>"; };
 		CE3F9856B11B9911D0018BD0 /* StartingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartingView.swift; sourceTree = "<group>"; };
 		CE3F98C2BD5D955247AA002B /* FileEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileEntity.swift; sourceTree = "<group>"; };
-		CE3F98F58F6CE05EBD781599 /* TokenResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		CE3F9932860A6D3DB3E4B896 /* GoogleConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleConfig.swift; sourceTree = "<group>"; };
 		CE3F998B7AE98CF0AEA72F28 /* ChangelogEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangelogEntity.swift; sourceTree = "<group>"; };
 		CE3F998C39BD1F8780D3989D /* ProfileMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileMapper.swift; sourceTree = "<group>"; };
@@ -126,10 +119,10 @@
 		CE3F9A639660C953F4F887DF /* DateExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 		CE3F9A87168894956B5F22AA /* TokenEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenEntity.swift; sourceTree = "<group>"; };
 		CE3F9AD0EE74B2B7CE9A2CA9 /* notatod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = notatod.entitlements; sourceTree = "<group>"; };
+		CE3F9B2740956524251F18C6 /* UploadEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadEntity.swift; sourceTree = "<group>"; };
 		CE3F9BE8A25BCB852EBBA5D1 /* FeatureResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureResponse.swift; sourceTree = "<group>"; };
 		CE3F9BF9B5F055D5526E3941 /* Dropbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dropbox.swift; sourceTree = "<group>"; };
 		CE3F9C63C774CAA15A23AAEB /* CloudApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudApi.swift; sourceTree = "<group>"; };
-		CE3F9C67AA352874C36BE132 /* ProfileResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		CE3F9C6E306A74DD166B4F86 /* MainExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainExt.swift; sourceTree = "<group>"; };
 		CE3F9CEE5B659E67A1DB4A41 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
 		CE3F9D28777EFE9F869CA06B /* ConstantData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantData.swift; sourceTree = "<group>"; };
@@ -143,7 +136,6 @@
 		CE3F9E6C42AB1D142E0B3C6A /* GeneralView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		CE3F9E7344B83812CC44A44E /* UserDefaultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultController.swift; sourceTree = "<group>"; };
 		CE3F9EBEC8752CCE6E00045F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		CE3F9EBF4DE206E661B6BAAB /* DriveResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveResponse.swift; sourceTree = "<group>"; };
 		CE3F9FF4273FFE0B1A6EF387 /* UpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,13 +222,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		CE3F922FDDE97401D47B9DD2 /* Dropbox */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Dropbox;
-			sourceTree = "<group>";
-		};
 		CE3F92EF11BA411DDA7C1FA9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +288,7 @@
 				CE3F998B7AE98CF0AEA72F28 /* ChangelogEntity.swift */,
 				CE3F9A87168894956B5F22AA /* TokenEntity.swift */,
 				CE3F98C2BD5D955247AA002B /* FileEntity.swift */,
+				CE3F9B2740956524251F18C6 /* UploadEntity.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -311,11 +297,8 @@
 			isa = PBXGroup;
 			children = (
 				CE3F954F2444D70B7861312B /* NoteResponse.swift */,
-				CE3F9EBF4DE206E661B6BAAB /* DriveResponse.swift */,
 				CE3F908C1B6CF3B9EA2D17E7 /* VersionResponse.swift */,
 				CE3F9BE8A25BCB852EBBA5D1 /* FeatureResponse.swift */,
-				CE3F9805049B895144D45890 /* Google */,
-				CE3F922FDDE97401D47B9DD2 /* Dropbox */,
 				CE3F9BF9B5F055D5526E3941 /* Dropbox.swift */,
 				CE3F92304BFFEF03E1918836 /* Google.swift */,
 			);
@@ -329,15 +312,6 @@
 				CE3F97B688D0C586A2142ECD /* Network.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		CE3F9805049B895144D45890 /* Google */ = {
-			isa = PBXGroup;
-			children = (
-				CE3F98F58F6CE05EBD781599 /* TokenResponse.swift */,
-				CE3F9C67AA352874C36BE132 /* ProfileResponse.swift */,
-			);
-			path = Google;
 			sourceTree = "<group>";
 		};
 		CE3F9812FCE298A4B15A662B /* Preferences */ = {
@@ -377,7 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				CE3F91C8EA08E59E38B7D343 /* DropboxController.swift */,
-				CE3F967B8FAF30CCCB79330D /* GoogleDriveController.swift */,
 				CE3F9C63C774CAA15A23AAEB /* CloudApi.swift */,
 				CE3F99B3D1F50A006310CFA5 /* GDriveController.swift */,
 			);
@@ -389,7 +362,6 @@
 			children = (
 				CE3F908821EE5EE4E56E4A56 /* EditorViewModel.swift */,
 				CE3F9314274B0F8D7140BDF7 /* MainViewModel.swift */,
-				CE3F9101972410E05645A977 /* GoogleSignInViewModel.swift */,
 				CE3F95CF86F1BBA0F50916A8 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
@@ -528,7 +500,6 @@
 				CE3F95BBBC2CF0679FA12B33 /* MainViewModel.swift in Sources */,
 				CE3F91F09334A8645070CF70 /* ContentView.swift in Sources */,
 				CE3F977B093281A9C8F5750F /* EditorView.swift in Sources */,
-				CE3F9678EFA988370485E53A /* GoogleSignInViewModel.swift in Sources */,
 				CE3F9E63A2B933A1989C511E /* DataExt.swift in Sources */,
 				CE3F9A37E38B130C3516C7CF /* GoogleConfig.swift in Sources */,
 				CE3F9C11073E45BE1D885BE2 /* PreferencesView.swift in Sources */,
@@ -538,7 +509,6 @@
 				CE3F961C55346E66CF0B0743 /* ProfileEntity.swift in Sources */,
 				CE3F98B880853ED72AD9E040 /* ProfileMapper.swift in Sources */,
 				CE3F9BF034D176AD5DA7BF60 /* NoteMapper.swift in Sources */,
-				CE3F9DC808AF8DB56125D9F8 /* DriveResponse.swift in Sources */,
 				CE3F96AD07F55E9AED7337BF /* KeyboardExt.swift in Sources */,
 				CE3F989566AB00598E650053 /* Enum.swift in Sources */,
 				CE3F98CAC95D475975039EE8 /* NumExt.swift in Sources */,
@@ -559,9 +529,6 @@
 				CE3F97EB3166C99CE2B090C3 /* Tooltip.swift in Sources */,
 				CE3F98374C46F6BE6DC96625 /* ShortcutView.swift in Sources */,
 				CE3F9BEE3126965B18082114 /* DropboxController.swift in Sources */,
-				CE3F909E73A3315A99CE132E /* GoogleDriveController.swift in Sources */,
-				CE3F94D9E4E4A56D1CE0520F /* TokenResponse.swift in Sources */,
-				CE3F9461BB6315F634F8A0EA /* ProfileResponse.swift in Sources */,
 				CE3F99E4BC55523385AF7033 /* CloudApi.swift in Sources */,
 				CE3F93E8B5AD2312B96E47D5 /* DropboxUserDefault.swift in Sources */,
 				CE3F920A26C083AA249C8F3B /* Dropbox.swift in Sources */,
@@ -577,6 +544,7 @@
 				CE3F9235EF159E0E7D0D70F1 /* FileEntity.swift in Sources */,
 				CE3F947DC2CF39E01A6EF1D1 /* FileMapper.swift in Sources */,
 				CE3F97AA6F1F57A8F4225F3F /* FeatureExt.swift in Sources */,
+				CE3F989E251227EFAF77E3C4 /* UploadEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

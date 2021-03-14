@@ -31,3 +31,23 @@ extension NSApplication {
         Int(AppVersion ?? "0")
     }
 }
+
+extension Result {
+    func doOnSuccess(onSuccess: @escaping (Success) -> ()) {
+        switch self {
+        case .success(let success):
+            onSuccess(success)
+        case .failure:
+            log("do error")
+        }
+    }
+
+    func doOnFailure(onFailure: @escaping (Failure) -> ()) {
+        switch self {
+        case .success:
+            log("do success")
+        case .failure(let error):
+            onFailure(error)
+        }
+    }
+}

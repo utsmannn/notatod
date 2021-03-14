@@ -4,12 +4,6 @@
 
 import Foundation
 
-extension ProfileResponse {
-    func mapToEntity() -> ProfileEntity {
-        ProfileEntity(email: email, name: name, givenName: givenName, pictureUrl: picture)
-    }
-}
-
 extension Google.ProfileResponse {
     func mapToEntity() -> ProfileEntity {
         ProfileEntity(email: email, name: name, givenName: givenName, pictureUrl: picture)
@@ -18,6 +12,6 @@ extension Google.ProfileResponse {
 
 extension Dropbox.ProfileResponse {
     func mapToEntity() -> ProfileEntity {
-        ProfileEntity(email: email, name: name.familiarName, givenName: name.displayName, pictureUrl: profilePhotoUrl)
+        ProfileEntity(email: email, name: name.displayName, givenName: name.displayName, pictureUrl: profilePhotoUrl ?? "")
     }
 }

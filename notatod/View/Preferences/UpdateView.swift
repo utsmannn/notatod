@@ -6,21 +6,21 @@ import Foundation
 import SwiftUI
 
 struct UpdateView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var mainViewModel: MainViewModel
 
     var body: some View {
         HStack {
-            /*if signInViewModel.isUpdateAvailable {
+            if mainViewModel.isUpdateAvailable {
                 VStack(alignment: .leading) {
                     Text("Update available")
                             .bold()
                     Divider()
-                    Text("Version \(signInViewModel.version?.versionName ?? "Unknown") (\(signInViewModel.version?.versionCode ?? 0))")
-                    Text(signInViewModel.version?.changelogString ?? "")
+                    Text("Version \(mainViewModel.version?.versionName ?? "Unknown") (\(mainViewModel.version?.versionCode ?? 0))")
+                    Text(mainViewModel.version?.changelogString ?? "")
                             .padding(.leading)
                     Spacer()
                     Button(action: {
-                        let downloadPageUrlString = signInViewModel.version?.downloadPage ?? "https://github.com/utsmannn"
+                        let downloadPageUrlString = mainViewModel.version?.downloadPage ?? "https://github.com/utsmannn"
                         downloadPageUrlString.clickUrl()
                     }, label: {
                         Text("Update now")
@@ -29,8 +29,7 @@ struct UpdateView: View {
                 Spacer()
             } else {
                 Text("No update available")
-            }*/
-            Text("No update available")
+            }
         }.padding()
     }
 }

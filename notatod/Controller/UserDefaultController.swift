@@ -19,12 +19,19 @@ class UserDefaultController {
     private let POPOVER_WINDOW = "\(TAG)_popover_window"
 
     func saveAuthType(authType: AuthType) {
-        defaults.set(authType.rawValue, forKey: AUTH_TYPE)
+        defaults.set(authType.enumAPI(), forKey: AUTH_TYPE)
     }
 
-    var authType: AuthType {
-        let savingTypeString = defaults.string(forKey: AUTH_TYPE) ?? AuthType.google.rawValue
-        return AuthType.init(rawValue: savingTypeString) ?? AuthType.google
+    func authType() -> AuthType {
+        let savingTypeString = defaults.string(forKey: AUTH_TYPE) ?? AuthType.disable.enumAPI()
+        switch savingTypeString {
+        case AuthType.google.enumAPI():
+            return .google
+        case AuthType.dropbox.enumAPI():
+            return .dropbox
+        default:
+            return .disable
+        }
     }
 
     func saveAccessToken(accessToken: String) {

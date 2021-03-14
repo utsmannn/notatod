@@ -14,25 +14,26 @@ class MainViewModel: ObservableObject, Equatable {
     @Published var selection: String?
     @Published var hasLogon: Bool?
     @Published var fontSize: Double = 16
+    @Published var fileInfo: Google.FileInfoResponse? = nil
 
-    @Published var fileInfo: DriveResponse.FileInfo? = nil
+    @Published var isUpdateAvailable = false
+    @Published var version: VersionResponse.MacOs?
 
-    var cloudApi: CloudApi
+    var cloudApi: CloudApi? = nil
+    var cloudDefault: CloudUserDefault? = nil
     let userDefault = UserDefaultController()
-    var cloudDefault: CloudUserDefault!
 
-    init(cloudApi: CloudApi) {
-        switch userDefault.authType {
+    init(cloudApi: CloudApi?) {
+        switch userDefault.authType() {
         case .google:
             cloudDefault = GoogleUserDefault()
         case .dropbox:
             cloudDefault = DropboxUserDefault()
+        case .disable:
+            cloudDefault = nil
         }
-        self.cloudApi = cloudApi
-    }
 
-    func setupInitializer(entities: [NoteEntity]) {
-        notes = entities
+        self.cloudApi = cloudApi
     }
 
     func setSelectionId(selectionId: String) {
@@ -75,109 +76,51 @@ class MainViewModel: ObservableObject, Equatable {
     }
 
     func uploadToDrive(status: @escaping (Bool) -> ()) {
-        let csvContent = NoteMapper.notesToTextCsv(notes: notes)
-        /*if userDefaultController.fileId() == nil {
-            driveController.initialUpload(
-                    body: csvContent,
-                    onSuccess: { upload in
-                        self.userDefaultController.saveFileId(fileId: upload.id)
-                        status(true)
-                    }, onError: { error in
-                status(false)
+        cloudApi?.upload(notes: notes) { result in
+            result.doOnSuccess { entity in
+                log(entity)
+            }
+            result.doOnFailure { error in
                 log(error)
-            })
-        } else {
-            let csvContent = NoteMapper.notesToTextCsv(notes: notes)
-            driveController.update(
-                    fileId: userDefaultController.fileId()!,
-                    body: csvContent,
-                    onSuccess: { upload in
-                        self.userDefaultController.saveFileId(fileId: upload.id)
-                        status(true)
-                    }, onError: { error in
-                status(false)
-                log(error)
-            })
-        }*/
+            }
+        }
     }
 
     func searchFileInDrive() {
-        if cloudDefault.accessToken() != "" && userDefault.fileId() == nil {
-            cloudApi.searchNoteFile { result in
-                switch result {
-                case .success(let data):
-                    self.userDefault.saveFileId(fileId: data.id)
-                case .failure(let error):
-                    log(error)
+        if hasLogon == true {
+            cloudApi?.searchNoteFile { result in
+                result.doOnSuccess { entity in
+                    self.cloudDefault?.saveFileId(fileId: entity.id)
+                    self.getFile()
                 }
-
-                self.getFile()
+                result.doOnFailure { error in
+                    self.setLocalNotes()
+                }
             }
         } else {
             setLocalNotes()
         }
-
     }
 
-    private func setLocalNotes() {
+    func setLocalNotes() {
         if userDefault.notes().isEmpty {
             notes = ConstantData.startingEntity()
-        } else  {
+        } else {
             notes = userDefault.notes()
         }
         setSelectionId(selectionId: notes[0].id)
     }
 
     private func getFile() {
-        cloudApi.getNoteFile { result in
-            switch result {
-            case .success(let entities):
+        cloudApi?.getNoteFile { result in
+            result.doOnSuccess { entities in
                 self.notes = entities
                 self.setSelectionId(selectionId: entities[0].id)
-            case .failure(let error):
+            }
+            result.doOnFailure { error in
                 log(error)
                 self.setLocalNotes()
             }
         }
-        /*log("file id ---> \(userDefaultController.fileId())")
-        let fileId = userDefaultController.fileId()
-
-        if userDefaultController.accessToken() == nil {
-            onSuccess(false)
-        } else {
-            if fileId == nil {
-                driveController.searchNoteFile(onSuccess: { file in
-                    self.userDefaultController.saveFileId(fileId: file.id)
-                    self.getFile(fileId: file.id, onSuccess: onSuccess, onError: onError)
-                }, onError: { error in
-                    onError(error)
-                })
-            } else {
-                getFile(fileId: fileId!, onSuccess: onSuccess, onError: onError)
-            }
-        }*/
     }
-
-    /*private func getFile(fileId: String, onSuccess: @escaping (Bool) -> (), onError: @escaping (Error) -> ()) {
-        driveController.getFileCsv(fileId: fileId, onSuccess: { s in
-            var entities = NoteMapper.stringCsvToNotes(stringCsv: s)
-            let existingNote = self.userDefaultController.notes()
-
-            for existing in existingNote {
-                let exist = entities.map({ entity -> String in entity.body }).contains(existing.body)
-                log("exis \(existing.title) --> \(exist)")
-                if !exist {
-                    entities.insert(existing, at: 0)
-                }
-            }
-
-            self.userDefaultController.saveNotes(notes: entities)
-            self.notes = self.userDefaultController.notes()
-            self.setSelectionId(selectionId: self.notes[0].id)
-            onSuccess(true)
-        }, onError: { error in
-            onError(error)
-            log("error --> \(error)")
-        })
-    }*/
 }

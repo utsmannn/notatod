@@ -18,7 +18,6 @@ struct Network {
         private var contentTypeValue: String
         private var enableDebugPrint: Bool
         private var authorizationKey: String
-
         private var bodyString = ""
         private var methodString = ""
 
@@ -50,6 +49,7 @@ struct Network {
         private var methodString: String
         private var path: String
         private var authorizationKey: String
+        private var valuesAdditional: [[String: String]] = [[String: String]]()
         private var bodyString = ""
 
         init(session: URLSessionProtocol, baseUrl: String, contentTypeValue: String, methodString: String, path: String, authorizationKey: String) {
@@ -89,6 +89,12 @@ struct Network {
             return self
         }
 
+        func addValueHeader(key: String, value: String) -> Request {
+            let param = [key: value]
+            valuesAdditional.append(param)
+            return self
+        }
+
         func addContentType(contentType: ContentType) -> Request {
             contentTypeValue = contentType.rawValue
             return self
@@ -103,6 +109,13 @@ struct Network {
             request.addValue(contentTypeValue, forHTTPHeaderField: "Content-Type")
             if authorizationKey != "" {
                 request.addValue(authorizationKey, forHTTPHeaderField: "Authorization")
+            }
+
+            log("additional values -----> \(valuesAdditional)")
+            valuesAdditional.forEach { dictionary in
+                dictionary.forEach { key, value in
+                    request.addValue(key, forHTTPHeaderField: value)
+                }
             }
             request.httpBody = bodyData
 
@@ -135,6 +148,14 @@ struct Network {
             if authorizationKey != "" {
                 request.addValue(authorizationKey, forHTTPHeaderField: "Authorization")
             }
+
+            log("additional values -----> \(valuesAdditional)")
+            valuesAdditional.forEach { dictionary in
+                dictionary.forEach { key, value in
+                    request.addValue(value, forHTTPHeaderField: key)
+                }
+            }
+
             request.httpBody = bodyData
 
             DispatchQueue.global(qos: .background).async {

@@ -10,4 +10,5 @@ protocol CloudApi {
     func getProfile(completion: @escaping (Result<ProfileEntity, Error>) -> ())
     func searchNoteFile(completion: @escaping (Result<FileEntity, Error>) -> ())
     func getNoteFile(completion: @escaping (Result<[NoteEntity], Error>) -> ())
+    func upload(notes: [NoteEntity], completion: @escaping (Result<FileEntity, Error>) -> ())
 }

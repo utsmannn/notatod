@@ -12,34 +12,98 @@ struct AccountView: View {
     private let github = "https://github.com/utsmannn"
 
     var body: some View {
-        HStack {
-            /*if signInViewModel.isGoogleAuthEnable {
-                VStack {
-                    Image("Gdrive")
-                            .resizable()
-                            .frame(width: 100, height: 70)
-                    logonLeftView(logonStatus: signInViewModel.logonStatus)
+        if authViewModel.authType != .disable {
+            ZStack {
+                GeometryReader { proxy in
+                    authLogonView()
+                    VStack(alignment: .leading) {
+                        Text("""
+                             Attention!
+                             This feature currently on testing!
+                             """).font(.footnote)
+                    }.padding()
                 }
-                logonRightView(logonStatus: signInViewModel.logonStatus)
-            } else {
-                VStack {
-                    Image("Gdrive")
-                            .resizable()
-                            .frame(width: 100, height: 70)
-                    Divider()
-                    Text("Google Drive feature not yet available")
-                }
-            }*/
-            VStack {
+            }
+        } else {
+            AnyView(VStack {
                 Image("Gdrive")
                         .resizable()
                         .frame(width: 100, height: 70)
                 Divider()
                 Text("Google Drive feature not yet available")
-            }
+            })
+        }
+    }
 
-        }.padding().onAppear {
-            //log("sign in available ----> \(signInViewModel.isGoogleAuthEnable)")
+    private func authLogonView() -> AnyView {
+        if authViewModel.hasLogon {
+            return AnyView(HStack {
+                VStack {
+                    Image(authViewModel.authType == .google ? "Gdrive" : "Dropbox")
+                            .resizable()
+                            .frame(width: 100, height: 70)
+                    Text("You have logged in")
+                            .font(.footnote)
+                    Button(action: {
+                        authViewModel.sign()
+                    }, label: {
+                        Text("Change account")
+                    })
+                }.padding()
+                Divider().padding()
+                VStack(alignment: .leading) {
+                    Text("Account authorized by: ")
+                    Text(authViewModel.profile!.name)
+                    Text(authViewModel.profile!.email)
+                    Spacer()
+                }.padding(.vertical)
+
+            }.padding())
+        } else {
+            return AnyView(HStack {
+                if authViewModel.authType != .google {
+                    Spacer()
+                }
+                VStack {
+                    Spacer()
+                    Image(authViewModel.authType == .google ? "Gdrive" : "Dropbox")
+                            .resizable()
+                            .frame(width: 100, height: 70)
+                    Button(action: {
+                        authViewModel.sign()
+                    }, label: {
+                        if authViewModel.authType == .google {
+                            Text("Sign in with Google")
+                        } else if authViewModel.authType == .dropbox {
+                            Text("Sign in with Dropbox")
+                        }
+                    })
+                    if authViewModel.authType == .google {
+                        Text("Sync and save your notes on Google Drive")
+                    } else if authViewModel.authType == .dropbox {
+                        Text("Sync and save your notes on Dropbox")
+                    }
+                    Spacer()
+                }
+                if authViewModel.authType == .google {
+                    Divider().padding()
+                    VStack(alignment: .leading) {
+                        Text(featureMessage)
+                        Button(action: {
+                            email.clickUrl()
+                        }, label: {
+                            Text("Send me email")
+                        })
+                        Button(action: {
+                            github.clickUrl()
+                        }, label: {
+                            Text("Text me on github")
+                        })
+                    }
+                } else {
+                    Spacer()
+                }
+            }.padding())
         }
     }
 

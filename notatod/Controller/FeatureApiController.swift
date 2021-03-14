@@ -17,21 +17,23 @@ class FeatureApiController {
 
     func checkUpdateAvailable(onResult: @escaping (VersionResponse.MacOs) -> ()) {
         networkTask?.request(path: pathVersion, method: .get)
-                .start()
-                .onSuccess { data in
-                    do {
-                        let macOsVersion: VersionResponse = try data.decodeData()
-                        onResult(macOsVersion.macOS)
-                    } catch {
-                        log(error)
-                        return
+                .start { result in
+                    result.doOnSuccess { data in
+                        do {
+                            let macOsVersion: VersionResponse = try data.decodeData()
+                            onResult(macOsVersion.macOS)
+                        } catch {
+                            log(error)
+                            return
+                        }
                     }
-                }.onFailure { error in
-                    log(error)
+                    result.doOnFailure { error in
+                        log(error)
+                    }
                 }
     }
 
-    func authServiceEnable(onResult: @escaping (AuthEnable) -> ()) {
+    func authServiceEnable(onResult: @escaping (AuthType) -> ()) {
         networkTask?.request(path: pathFeature, method: .get)
                 .start { result in
                     switch result {
@@ -39,7 +41,7 @@ class FeatureApiController {
                         do {
                             let response: FeatureResponse = try data.decodeData()
                             let authService = response.asAuthEnable()
-                            onResult(authService)
+                            onResult(.dropbox)
                         } catch {
                             return
                         }

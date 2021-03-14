@@ -5,7 +5,7 @@
 import Foundation
 
 extension FeatureResponse {
-    func asAuthEnable() -> AuthEnable {
+    func asAuthEnable() -> AuthType {
         switch cloudServiceEnable {
         case AuthType.google.enumAPI():
             return .google

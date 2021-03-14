@@ -11,6 +11,7 @@ enum Error: Swift.Error {
     case invalid_response
     case decoding_error(Swift.Error)
     case invalid_credential
+    case not_found
 }
 
 enum AuthTypeUrl<URL> {
@@ -19,12 +20,7 @@ enum AuthTypeUrl<URL> {
     case none
 }
 
-enum AuthType: String {
-    case google = "google"
-    case dropbox = "dropbox"
-}
-
-enum AuthEnable {
+enum AuthType {
     case google
     case dropbox
     case disable
@@ -37,6 +33,8 @@ extension AuthType {
             return "GOOGLE_DRIVE"
         case .dropbox:
             return "DROPBOX"
+        case .disable:
+            return ""
         }
     }
 }
@@ -51,6 +49,8 @@ enum ContentType: String {
     case application_form_urlencoded = "application/x-www-form-urlencoded"
     case application_json = "application/json"
     case multipart_related_boundary = "multipart/related; boundary=foo_bar_baz"
+    case application_octet_stream = "application/octet-stream"
+    case text_plain = "text/plain"
 }
 
 enum Tab: Hashable {

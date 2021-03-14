@@ -14,15 +14,11 @@ import KeyboardShortcuts
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
 
     let userDefaultController = UserDefaultController()
-    let driveController = GoogleDriveController()
-    /*let dropboxController = DropboxController()
-    let gDriveController = GDriveController()*/
     let featureApiController = FeatureApiController()
 
-    var cloudApi: CloudApi!
-    var cloudUserDefault: CloudUserDefault!
+    var cloudApi: CloudApi? = nil
+    var cloudUserDefault: CloudUserDefault? = nil
 
-    //var signInViewModel: GoogleSignInViewModel!
     var authViewModel: AuthViewModel!
     var mainViewModel: MainViewModel!
 
@@ -30,52 +26,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     var popover: NSPopover!
     var preferencesWindow: NSWindow!
     var accountWindow: NSWindow!
+
     var startingWindow: NSWindow!
+    var startingView: StartingView?
 
     typealias UserNotification = NSUserNotification
     typealias UserNotificationCenter = NSUserNotificationCenter
     let UserNotificationDefaultSoundName = NSUserNotificationDefaultSoundName
 
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // uncomment for see UserDefaultData
         for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
             if key.contains(UserDefaultController.TAG) {
                 log("\n\(key) : \n\(value) \n")
             }
         }
 
-        let authType = userDefaultController.authType
-        switch authType {
-        case .google:
-            cloudApi = GDriveController()
-            cloudUserDefault = GoogleUserDefault()
-        case .dropbox:
-            cloudApi = DropboxController()
-            cloudUserDefault = DropboxUserDefault()
+        openStartingWindow()
+        checkUpdateAvailable()
+        checkAuthTypeFeature { authEnable in
+            self.setupInit(authType: authEnable)
         }
 
-        /*signInViewModel = GoogleSignInViewModel(
-                userDefaultController: userDefaultController,
-                driveController: driveController,
-                featureApiController: featureApiController,
-                dropboxController: dropboxController,
-                gDriveController: gDriveController
-        )*/
+        setupKeyboardShortcut()
+    }
 
-
-        //driveController.accessToken = signInViewModel.getAccessToken()
-        //mainViewModel = MainViewModel(driveController: driveController, userDefaultController: userDefaultController)
-        /*if signInViewModel.profile != nil {
-            signInViewModel.logonStatus = .sign_in
-        }
-
-        mainViewModel.hasLogon = signInViewModel.profile != nil*/
-        //getFileInDrive()
-
+    private func setupInit(authType: AuthType) {
         authViewModel = AuthViewModel(cloudApi: cloudApi)
         mainViewModel = MainViewModel(cloudApi: cloudApi)
-        mainViewModel.searchFileInDrive()
+
+        authViewModel.authType = authType
+        authViewModel.checkSession { entity in
+            self.mainViewModel.hasLogon = entity != nil
+            self.mainViewModel.searchFileInDrive()
+        }
+
         let contentView = ContentView()
                 .environmentObject(mainViewModel)
 
@@ -102,31 +86,39 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         }
 
         NSApp.activate(ignoringOtherApps: true)
-
-        openStartingWindow()
-        checkGoogleAuthEnable()
-        checkUpdateAvailable()
-        setupKeyboardShortcut()
     }
 
     func checkUpdateAvailable() {
         featureApiController.checkUpdateAvailable { os in
             let isUpdateAvailable = NSApplication.shared.AppVersionInt! < os.versionCode
-            //self.signInViewModel.version = os
-            //self.signInViewModel.isUpdateAvailable = isUpdateAvailable
+            self.mainViewModel.isUpdateAvailable = isUpdateAvailable
+            self.mainViewModel.version = os
         }
     }
 
-    func checkGoogleAuthEnable() {
-        /*featureApiController.isGoogleAuthEnable { b in
-            if !b {
-                self.userDefaultController.clearDriveData()
+    func checkAuthTypeFeature(authType: @escaping (AuthType) -> ()) {
+        featureApiController.authServiceEnable { featureEnable in
+            self.userDefaultController.saveAuthType(authType: featureEnable)
+            switch featureEnable {
+            case .google:
+                self.cloudApi = GDriveController()
+                self.cloudUserDefault = GoogleUserDefault()
+                    /**/
+            case .dropbox:
+                self.cloudApi = DropboxController()
+                self.cloudUserDefault = DropboxUserDefault()
+            case .disable:
+                self.cloudApi = nil
+                self.cloudUserDefault = nil
             }
-        }*/
+
+            DispatchQueue.main.async {
+                authType(featureEnable)
+            }
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
         userDefaultController.saveNotes(notes: mainViewModel.notes)
         log("quit...")
     }
@@ -160,90 +152,35 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
 
     func application(_ application: NSApplication, open urls: [URL]) {
+        cloudApi?.getTokenResponse(using: urls[0]) { result in
+            result.doOnSuccess { entity in
+                log(entity.accessToken)
+                self.cloudUserDefault?.saveAccessToken(token: entity.accessToken)
+                self.cloudUserDefault?.saveAccountId(accountId: entity.profileId)
+                self.showNotification(message: "Account linked")
 
-        /*let isGoogleUrl = signInViewModel.expectGoogleUserUrl(url: urls)
-        log("url incoming ... -> \(urls.map { url -> String in url.absoluteString })")
-        if isGoogleUrl.0 {
-            signInViewModel.getTokenResponse(using: isGoogleUrl.1!) { result in
-                switch result {
-                case .success(let success):
-                    self.driveController.accessToken = success.accessToken
-                    self.showNotification(message: "Google account connected")
-                    self.signInViewModel.requestProfile(idToken: success.idToken)
-                    self.mainViewModel.hasLogon = self.signInViewModel.profile != nil
-                    self.getFileInDrive()
-                case .failure(let error):
-                    log("reason --> \(error.localizedDescription)")
-                    self.showNotification(message: "Google account failed")
-                }
-
-                log(self.signInViewModel.logonStatus)
-            }
-        } else {
-            log(urls[0].absoluteString)
-            dropboxController.getTokenResponse(using: urls[0]) { result in
-                switch result {
-                case .success(let success):
-                    log(success.accessToken)
-                case .failure(let error):
-                    log("reason --> \(error.localizedDescription)")
-                    self.showNotification(message: "Google account failed")
+                self.authViewModel.checkSession { entity in
+                    self.mainViewModel.hasLogon = entity != nil
+                    self.mainViewModel.searchFileInDrive()
                 }
             }
-        }*/
 
-        /*let cloudApi: some CloudApi = DropboxController()
-        (cloudApi as! DropboxController).getTokenResponse(using: urls[0]) { (result: Result<notatod.DropboxController.T, Error>) in
-
-        }*/
-
-        /*let urlType = urlTypeChecking(urls: urls)
-        switch urlType {
-        case .google(let url):
-            log("google --> \(url)")
-            gDriveController.getTokenResponse(using: url) { result in
-                switch result {
-                case .success(let success):
-                    log(success.accessToken)
-                case .failure(let error):
-                    log("reason --> \(error.localizedDescription)")
-                    self.showNotification(message: "Google account failed")
-                }
-            }
-        case .dropbox(let url):
-            dropboxController.getTokenResponse(using: url) { (result: Result<notatod.DropboxController.T, Error>) in
-                switch result {
-                case .success(let success):
-                    log(success.accessToken)
-                case .failure(let error):
-                    log("reason --> \(error.localizedDescription)")
-                    self.showNotification(message: "Google account failed")
-                }
-            }
-        case .none:
-            log("incoming url")
-        }*/
-
-        cloudApi.getTokenResponse(using: urls[0]) { result in
-            switch result {
-            case .success(let success):
-                log(success.accessToken)
-                self.cloudUserDefault.saveAccessToken(token: success.accessToken)
-                self.cloudUserDefault.saveAccountId(accountId: success.profileId)
-            case .failure(let error):
+            result.doOnFailure { error in
                 log("reason --> \(error.localizedDescription)")
                 self.showNotification(message: "Account failed")
             }
         }
-
     }
 
     @objc func togglePopover(_ sender: AnyObject?) {
-        if let button = statusBarItem.button {
-            if popover.isShown {
-                popover.performClose(sender)
-            } else {
-                popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+        if mainViewModel != nil && authViewModel != nil {
+            mainViewModel.setLocalNotes()
+            if let button = statusBarItem.button {
+                if popover.isShown {
+                    popover.performClose(sender)
+                } else {
+                    popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+                }
             }
         }
     }
@@ -259,11 +196,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func openStartingWindow() {
         if startingWindow == nil {
-            let startingView = StartingView()
-                    .environmentObject(authViewModel)
-
+            startingView = StartingView()
             let windowView = NSHostingController(rootView: startingView)
-
             startingWindow = NSWindow(
                     contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
                     styleMask: [.titled, .closable],
@@ -281,13 +215,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
 
     func openPreferencesWindow() {
-        checkGoogleAuthEnable()
         checkUpdateAvailable()
         userDefaultController.saveNotes(notes: mainViewModel.notes)
 
         if preferencesWindow == nil {
             let preferencesView = PreferencesView()
                     .environmentObject(authViewModel)
+                    .environmentObject(mainViewModel)
 
             let windowView = NSHostingController(rootView: preferencesView)
             preferencesWindow = NSWindow(
@@ -307,7 +241,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
 
     func openAccountWindow() {
-        checkGoogleAuthEnable()
         checkUpdateAvailable()
         userDefaultController.saveNotes(notes: mainViewModel.notes)
 

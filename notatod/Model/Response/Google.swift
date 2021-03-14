@@ -14,7 +14,7 @@ struct Google {
     static let baseUrlApi = "https://www.googleapis.com"
     static let baseUrlProfile = "https://oauth2.googleapis.com"
 
-    struct TokenResponse: Codable, Equatable, Response {
+    struct TokenResponse: Codable, Equatable {
         let accessToken: String
         let expiresIn: Int
         let idToken: String
@@ -23,10 +23,24 @@ struct Google {
         let refreshToken: String?
     }
 
-    struct ProfileResponse : Codable, Equatable, Response {
+    struct ProfileResponse : Codable, Equatable {
         let email: String
         let name: String
         let givenName: String
         let picture: String
+    }
+
+    struct FileResponse: Codable, Equatable {
+        let name: String
+        let id: String
+    }
+
+    struct FileInfoResponse: Codable, Equatable {
+        let createdDate: String
+        let modifiedDate: String
+    }
+
+    struct FilesResponse: Codable, Equatable {
+        let files: [FileResponse]
     }
 }

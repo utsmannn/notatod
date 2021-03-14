@@ -4,7 +4,13 @@
 
 import Foundation
 
-extension DriveResponse.File {
+extension Google.FileResponse {
+    func mapToEntity() -> FileEntity {
+        FileEntity(name: name, id: id)
+    }
+}
+
+extension Dropbox.FileResponse {
     func mapToEntity() -> FileEntity {
         FileEntity(name: name, id: id)
     }

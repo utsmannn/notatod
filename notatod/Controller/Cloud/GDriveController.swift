@@ -19,6 +19,8 @@ class GDriveController: CloudApi {
         case profile = "/tokeninfo"
         case search = "/drive/v3/files"
         case file = "/drive/v2/files"
+        case upload = "/upload/drive/v3/files?uploadType=multipart"
+        case update = "/upload/drive/v2/files"
     }
 
     private let googleUserDefault = GoogleUserDefault()
@@ -66,20 +68,22 @@ class GDriveController: CloudApi {
                 .addParam(key: "grant_type", value: "authorization_code")
                 .addParam(key: "redirect_uri", value: Google.redirectUri)
                 .addContentType(contentType: .application_form_urlencoded)
-                .start()
-                .onSuccess { data in
-                    log(data.asString())
-                    do {
-                        let response: Google.TokenResponse = try data.decodeData()
-                        self.googleUserDefault.saveAccessToken(token: response.accessToken)
-                        self.googleUserDefault.saveAccountId(accountId: response.idToken)
-                        completion(.success(response.mapToEntity()))
-                    } catch {
-                        log(error)
-                        completion(.failure(.decoding_error(error)))
+                .start { result in
+                    result.doOnSuccess { data in
+                        do {
+                            let response: Google.TokenResponse = try data.decodeData()
+                            self.googleUserDefault.saveAccessToken(token: response.accessToken)
+                            self.googleUserDefault.saveAccountId(accountId: response.idToken)
+                            completion(.success(response.mapToEntity()))
+                        } catch {
+                            log(error)
+                            completion(.failure(.decoding_error(error)))
+                        }
                     }
-                }.onFailure { error in
-                    completion(.failure(error))
+
+                    result.doOnFailure { error in
+                        completion(.failure(error))
+                    }
                 }
     }
 
@@ -91,15 +95,16 @@ class GDriveController: CloudApi {
         networkTaskProfile?.request(path: getPath(path: .profile), method: .get)
                 .addParam(key: "id_token", value: googleUserDefault.accountId())
                 .start { result in
-                    switch result {
-                    case .success(let data):
+                    result.doOnSuccess { data in
                         do {
                             let profileResponse: Google.ProfileResponse = try data.decodeData()
                             completion(.success(profileResponse.mapToEntity()))
                         } catch {
                             completion(.failure(.decoding_error(error)))
                         }
-                    case .failure(let error):
+                    }
+
+                    result.doOnFailure { error in
                         completion(.failure(error))
                     }
                 }
@@ -108,15 +113,15 @@ class GDriveController: CloudApi {
     func searchNoteFile(completion: @escaping (Result<FileEntity, Error>) -> ()) {
         networkTask?.request(path: getPath(path: .search), method: .get)
                 .start { result in
-                    switch result {
-                    case .success(let data):
+                    result.doOnSuccess { data in
                         do {
-                            let filesResponse: DriveResponse.Files = try data.decodeData()
+                            let filesResponse: Google.FilesResponse = try data.decodeData()
                             let files = filesResponse.files
                             let mapToName = files.map { file -> String in
                                 file.name
                             }
                             guard let index = mapToName.findIndex(object: "notatod_content") else {
+                                completion(.failure(.not_found))
                                 return
                             }
                             let fileFound = files[index].mapToEntity()
@@ -124,7 +129,9 @@ class GDriveController: CloudApi {
                         } catch {
                             completion(.failure(.decoding_error(error)))
                         }
-                    case .failure(let error):
+                    }
+
+                    result.doOnFailure { error in
                         completion(.failure(error))
                     }
                 }
@@ -132,12 +139,11 @@ class GDriveController: CloudApi {
 
     func getNoteFile(completion: @escaping (Result<[NoteEntity], Error>) -> ()) {
         let externalPath = "?alt=media&source=downloadUrl"
-        let fileId = userDefault.fileId() ?? ""
+        let fileId = googleUserDefault.fileId()
         let path = "\(getPath(path: .file))/\(fileId)\(externalPath)"
         networkTask?.request(path: path, method: .get)
                 .start { result in
-                    switch result {
-                    case .success(let data):
+                    result.doOnSuccess { data in
                         guard let stringResponse = String(data: data, encoding: .utf8) else {
                             return
                         }
@@ -157,11 +163,62 @@ class GDriveController: CloudApi {
                         }, onInvalid: { error in
                             completion(.failure(.invalid_credential))
                         })
-                    case .failure(let error):
+                    }
+
+                    result.doOnFailure { error in
                         log(error)
                         completion(.failure(.network_error(error)))
                     }
                 }
+    }
+
+    private func googleContentBody(csvContent: String) -> String {
+        "--foo_bar_baz\nContent-Type: application/json; charset=UTF-8\n\n{\n \"name\": \"{name}\"\n}\n\n--foo_bar_baz\nContent-Type: text/csv\n\n{body}\n--foo_bar_baz--"
+                .replacingOccurrences(of: "{name}", with: "notatod_content")
+                .replacingOccurrences(of: "{body}", with: csvContent)
+    }
+
+    private func requestUpload(
+            notes: [NoteEntity],
+            path: String,
+            method: Method,
+            completion: @escaping (Result<FileEntity, Error>) -> ()
+    ) {
+        let stringCsv = NoteMapper.notesToTextCsv(notes: notes)
+        let contentBody = googleContentBody(csvContent: stringCsv)
+        networkTask?.request(path: path, method: method)
+                .addContentType(contentType: .multipart_related_boundary)
+                .addRawBody(body: contentBody)
+        .start { result in
+            result.doOnSuccess { data in
+                do {
+                    let uploadResponse: Google.FileResponse = try data.decodeData()
+                    let fileEntity = uploadResponse.mapToEntity()
+                    completion(.success(fileEntity))
+                } catch {
+                    completion(.failure(.decoding_error(error)))
+                }
+            }
+
+            result.doOnFailure { error in
+                completion(.failure(.network_error(error)))
+            }
+        }
+    }
+
+    func upload(notes: [NoteEntity], completion: @escaping (Result<FileEntity, Error>) -> ()) {
+        let fileId = googleUserDefault.fileId()
+        if fileId == "" {
+            // initial upload
+            let path = getPath(path: .upload)
+            let method: Method = .post
+            requestUpload(notes: notes, path: path, method: method, completion: completion)
+        } else {
+            // update
+            let path = "\(getPath(path: .update))/\(fileId)"
+            let method: Method = .put
+            requestUpload(notes: notes, path: path, method: method, completion: completion)
+        }
     }
 
 }

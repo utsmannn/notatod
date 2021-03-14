@@ -7,8 +7,6 @@ import SwiftUI
 
 struct StartingView: View {
     let appDelegate: AppDelegate? = NSApplication.shared.delegate as? AppDelegate
-    @EnvironmentObject var authViewModel: AuthViewModel
-
     var body: some View {
         VStack {
             HStack {
@@ -21,11 +19,9 @@ struct StartingView: View {
                         .font(.title)
             }
             Text("Notes in your menu bar!")
+
             Button(action: {
-                //NSApplication.shared.sendAction(#selector(appDelegate?.togglePopover(_:)), to: nil, from: nil)
-                //signInViewModel.dropboxController.signIn()
-                //signInViewModel.gDriveController.signIn()
-                authViewModel.sign()
+                NSApplication.shared.sendAction(#selector(appDelegate?.togglePopover(_:)), to: nil, from: nil)
             }, label: {
                 Text("Toggle note")
             })
