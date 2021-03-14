@@ -19,16 +19,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     var cloudApi: CloudApi? = nil
     var cloudUserDefault: CloudUserDefault? = nil
 
+    let startingViewModel = StartingViewModel()
     var authViewModel: AuthViewModel!
     var mainViewModel: MainViewModel!
 
     var statusBarItem: NSStatusItem!
     var popover: NSPopover!
+
     var preferencesWindow: NSWindow!
     var accountWindow: NSWindow!
-
     var startingWindow: NSWindow!
-    var startingView: StartingView?
 
     typealias UserNotification = NSUserNotification
     typealias UserNotificationCenter = NSUserNotificationCenter
@@ -43,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
         openStartingWindow()
         checkUpdateAvailable()
-        checkAuthTypeFeature { authEnable in
+        setupCloudApiFeature { authEnable in
             self.setupInit(authType: authEnable)
         }
 
@@ -85,25 +85,30 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             button.action = #selector(togglePopover(_:))
         }
 
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            self.startingViewModel.isReady = true
+        }
+
         NSApp.activate(ignoringOtherApps: true)
     }
 
     func checkUpdateAvailable() {
         featureApiController.checkUpdateAvailable { os in
-            let isUpdateAvailable = NSApplication.shared.AppVersionInt! < os.versionCode
-            self.mainViewModel.isUpdateAvailable = isUpdateAvailable
-            self.mainViewModel.version = os
+            if self.mainViewModel != nil && self.authViewModel != nil {
+                let isUpdateAvailable = NSApplication.shared.AppVersionInt! < os.versionCode
+                self.mainViewModel.isUpdateAvailable = isUpdateAvailable
+                self.mainViewModel.version = os
+            }
         }
     }
 
-    func checkAuthTypeFeature(authType: @escaping (AuthType) -> ()) {
+    func setupCloudApiFeature(authType: @escaping (AuthType) -> ()) {
         featureApiController.authServiceEnable { featureEnable in
             self.userDefaultController.saveAuthType(authType: featureEnable)
             switch featureEnable {
             case .google:
                 self.cloudApi = GDriveController()
                 self.cloudUserDefault = GoogleUserDefault()
-                    /**/
             case .dropbox:
                 self.cloudApi = DropboxController()
                 self.cloudUserDefault = DropboxUserDefault()
@@ -150,7 +155,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         }
     }
 
-
     func application(_ application: NSApplication, open urls: [URL]) {
         cloudApi?.getTokenResponse(using: urls[0]) { result in
             result.doOnSuccess { entity in
@@ -196,7 +200,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func openStartingWindow() {
         if startingWindow == nil {
-            startingView = StartingView()
+            let startingView = StartingView()
+                    .environmentObject(startingViewModel)
+
             let windowView = NSHostingController(rootView: startingView)
             startingWindow = NSWindow(
                     contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),

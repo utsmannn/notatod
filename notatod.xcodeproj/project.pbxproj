@@ -40,6 +40,7 @@
 		CE3F97B6DF9EC150382D80D2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = CE3F937D6BFEAEDBD1DE549B /* .gitignore */; };
 		CE3F97EB3166C99CE2B090C3 /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F94D3075F5A265D0AEEF0 /* Tooltip.swift */; };
 		CE3F98374C46F6BE6DC96625 /* ShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9DCDD7AEEE2C419A3FFA /* ShortcutView.swift */; };
+		CE3F9875FB12F6CB2A6B87A6 /* StartingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9EF5D7B8982C44E6A836 /* StartingViewModel.swift */; };
 		CE3F987902E6FEDF3036B0AF /* Google.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F92304BFFEF03E1918836 /* Google.swift */; };
 		CE3F989566AB00598E650053 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F92F23796C4D9438BEA0F /* Enum.swift */; };
 		CE3F989E251227EFAF77E3C4 /* UploadEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3F9B2740956524251F18C6 /* UploadEntity.swift */; };
@@ -136,6 +137,7 @@
 		CE3F9E6C42AB1D142E0B3C6A /* GeneralView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		CE3F9E7344B83812CC44A44E /* UserDefaultController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultController.swift; sourceTree = "<group>"; };
 		CE3F9EBEC8752CCE6E00045F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CE3F9EF5D7B8982C44E6A836 /* StartingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartingViewModel.swift; sourceTree = "<group>"; };
 		CE3F9FF4273FFE0B1A6EF387 /* UpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -363,6 +365,7 @@
 				CE3F908821EE5EE4E56E4A56 /* EditorViewModel.swift */,
 				CE3F9314274B0F8D7140BDF7 /* MainViewModel.swift */,
 				CE3F95CF86F1BBA0F50916A8 /* AuthViewModel.swift */,
+				CE3F9EF5D7B8982C44E6A836 /* StartingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				CE3F947DC2CF39E01A6EF1D1 /* FileMapper.swift in Sources */,
 				CE3F97AA6F1F57A8F4225F3F /* FeatureExt.swift in Sources */,
 				CE3F989E251227EFAF77E3C4 /* UploadEntity.swift in Sources */,
+				CE3F9875FB12F6CB2A6B87A6 /* StartingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
