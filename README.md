@@ -33,7 +33,12 @@
 ## Download
 Go to [release page](https://github.com/utsmannn/notatod/releases) and download *.dmg asset of the latest release
 ```
-Version 1.1.0-alpha-3 (latest version)
+Version 1.1.0-alpha-4 (latest version)
+- Add Dropbox Integration
+- Add new route (/v1) for feature update api
+- Fix editor in High Sierra
+
+Version 1.1.0-alpha-3
 - Add keyboard shortcut
 - Add window when app open
 - Add Google OAuth2 performance
@@ -59,11 +64,11 @@ Version 1.0.0-alpha-1
 - [x] Preferences menu
 - [x] Simple ui
 - [x] Synchronized with Google Drive (internal testing)
+- [x] Add Dropbox API for Google Drive API alternative
 - [x] Keyboard shortcut
 
 ## Roadmap
 - [ ] Enable launch at login
-- [ ] Add Dropbox API for Google Drive API alternative
 - [ ] Image inserting
 - [ ] Code highlighter
 - [ ] Mobile client support
@@ -73,8 +78,8 @@ Version 1.0.0-alpha-1
 - SwiftUI
 - AppCode + XCode
 - MVVM Clean Arch
-- Google OAuth2 API (REST)
 - Google Drive API (REST)
+- Dropbox API (REST)
 - KeyboardShortcuts (by [Sindre Sorhus](https://github.com/sindresorhus/KeyboardShortcuts))
 - Kotlin Ktor for updater API
 
