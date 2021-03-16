@@ -1,0 +1,3 @@
+[submodule "notatod-update-server"]
+	path = notatod-update-server
+	url = git@github.com:utsmannn/notatod-update-server.git
