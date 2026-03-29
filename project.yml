@@ -1,0 +1,98 @@
+name: Notatod
+options:
+  bundleIdPrefix: com.notatod
+  deploymentTarget:
+    macOS: '14.0'
+configs:
+  Debug: debug
+  Release: release
+packages:
+  MarkdownUI:
+    url: https://github.com/gonzalezreal/swift-markdown-ui
+    from: 2.4.1
+  Splash:
+    url: https://github.com/JohnSundell/Splash
+    from: 0.16.0
+  HotKey:
+    url: https://github.com/soffes/HotKey
+    from: 0.2.1
+settings:
+  base:
+    SWIFT_VERSION: 5.10
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 1.0
+    GENERATE_INFOPLIST_FILE: NO
+    MACOSX_DEPLOYMENT_TARGET: 14.0
+    PRODUCT_NAME: $(TARGET_NAME)
+    SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_APP_SANDBOX: YES
+targets:
+  Notatod:
+    type: application
+    platform: macOS
+    deploymentTarget: '14.0'
+    sources:
+      - path: Notatod
+        excludes:
+          - Resources/Assets.xcassets/**/*.md
+    resources:
+      - path: Notatod/Resources
+      - path: Notatod/Config
+        optional: true
+    entitlements:
+      path: Notatod/Notatod.entitlements
+    info:
+      path: Notatod/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.notatod.app
+        INFOPLIST_FILE: Notatod/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Notatod/Notatod.entitlements
+        SWIFT_EMIT_LOC_STRINGS: YES
+    dependencies:
+      - package: MarkdownUI
+      - package: Splash
+      - package: HotKey
+    scheme:
+      testTargets:
+        - NotatodTests
+        - NotatodUITests
+  NotatodTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: '14.0'
+    sources:
+      - path: NotatodTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.notatod.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Notatod
+    dependencies:
+      - target: Notatod
+  NotatodUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    deploymentTarget: '14.0'
+    sources:
+      - path: NotatodUITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.notatod.app.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Notatod
+    dependencies:
+      - target: Notatod
+schemes:
+  Notatod:
+    build:
+      targets:
+        Notatod: all
+        NotatodTests: [test]
+        NotatodUITests: [test]
+    test:
+      gatherCoverageData: true
+      targets:
+        - name: NotatodTests
+        - name: NotatodUITests
