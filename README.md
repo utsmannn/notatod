@@ -108,21 +108,21 @@ Releases are intentionally manual.
 ### Requirements
 
 - The workflow is `workflow_dispatch` only.
-- It must be started from the `master` branch.
+- It must be started from the `main` branch.
 - The repository should define a protected GitHub Environment named `release` so publish-capable steps require approval.
-- The self-hosted runner must use dedicated labels for release jobs instead of exposing a generic shared runner pool. The workflow targets `self-hosted`, `macOS`, and `release`.
-- `xcodegen`, `xcodebuild`, and `gh` must be available on the release runner.
+- The self-hosted runner must match the workflow labels `self-hosted`, `macOS`, and `X64`.
+- `xcodegen`, `xcodebuild`, `gh`, and `hdiutil` must be available on the release runner.
 
 ### How it works
 
 1. Manually trigger `.github/workflows/release.yml` and choose `major`, `minor`, or `patch`.
-2. The workflow hard-fails unless it runs on `refs/heads/master` for `utsmannn/notatod` and is started by a human actor.
-3. `scripts/release-version.sh` bumps the semantic version from `project.yml`, increments the build number, and syncs `Notatod/Info.plist`.
+2. The workflow hard-fails unless it runs on `refs/heads/main` for `utsmannn/notatod` and is started by a human actor.
+3. The workflow fetches tags first, then `scripts/release-version.sh` computes the next version from the latest existing `vX.Y.Z` tag (or `project.yml` if no tag is newer), increments the build number, and syncs `Notatod/Info.plist`.
 4. `xcodegen generate` regenerates `Notatod.xcodeproj`.
 5. The workflow verifies the diff is limited to release metadata, then runs:
-   - `xcodebuild build -scheme Notatod -project Notatod.xcodeproj`
+   - `xcodebuild build -scheme Notatod -project Notatod.xcodeproj -configuration Release -derivedDataPath "$BUILD_DIR/DerivedData"`
    - `xcodebuild test -scheme Notatod -project Notatod.xcodeproj -only-testing:NotatodTests`
-6. If both pass, it commits the version bump, creates an annotated `vX.Y.Z` tag, pushes `master` and the tag, and publishes a GitHub Release with generated notes.
+6. If both pass, it packages `Notatod.app` into `dist/Notatod-vX.Y.Z.dmg`, commits the version bump, creates an annotated `vX.Y.Z` tag, pushes `main` and the tag, and publishes a GitHub Release with generated notes plus the DMG asset.
 
 ### Local verification
 

@@ -27,6 +27,9 @@ jobs:
       - macOS
       - X64
     environment: release
+    env:
+      BUILD_DIR: ${{ github.workspace }}/build/release
+      DIST_DIR: ${{ github.workspace }}/dist
     steps:
       - name: Validate release context
         env:
@@ -111,10 +114,45 @@ jobs:
           done <<< "$changed_files"
 
       - name: Build app
-        run: xcodebuild build -scheme Notatod -project Notatod.xcodeproj
+        run: |
+          set -euo pipefail
+
+          rm -rf "$BUILD_DIR" "$DIST_DIR"
+          mkdir -p "$BUILD_DIR" "$DIST_DIR"
+
+          xcodebuild build \
+            -scheme Notatod \
+            -project Notatod.xcodeproj \
+            -configuration Release \
+            -derivedDataPath "$BUILD_DIR/DerivedData"
 
       - name: Run release tests
         run: xcodebuild test -scheme Notatod -project Notatod.xcodeproj -only-testing:NotatodTests
+
+      - name: Package DMG
+        run: |
+          set -euo pipefail
+
+          version="${{ steps.version.outputs.NEXT_VERSION }}"
+          app_path="$BUILD_DIR/DerivedData/Build/Products/Release/Notatod.app"
+          stage_dir="$BUILD_DIR/dmg-root"
+          dmg_path="$DIST_DIR/Notatod-v${version}.dmg"
+
+          if [[ ! -d "$app_path" ]]; then
+            echo "Built app not found at $app_path" >&2
+            exit 1
+          fi
+
+          rm -rf "$stage_dir" "$dmg_path"
+          mkdir -p "$stage_dir"
+          cp -R "$app_path" "$stage_dir/"
+
+          hdiutil create \
+            -volname "Notatod" \
+            -srcfolder "$stage_dir" \
+            -ov \
+            -format UDZO \
+            "$dmg_path"
 
       - name: Commit release bump
         run: |
@@ -144,7 +182,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "v${{ steps.version.outputs.NEXT_VERSION }}" \
+          set -euo pipefail
+
+          version="${{ steps.version.outputs.NEXT_VERSION }}"
+          dmg_path="$DIST_DIR/Notatod-v${version}.dmg"
+
+          if [[ ! -f "$dmg_path" ]]; then
+            echo "DMG asset not found at $dmg_path" >&2
+            exit 1
+          fi
+
+          gh release create "v${version}" \
+            "$dmg_path" \
             --target main \
-            --title "v${{ steps.version.outputs.NEXT_VERSION }}" \
+            --title "v${version}" \
             --generate-notes
