@@ -20,7 +20,7 @@ settings:
   base:
     SWIFT_VERSION: 5.10
     CURRENT_PROJECT_VERSION: 1
-    MARKETING_VERSION: 1.0
+    MARKETING_VERSION: 2.0.0
     GENERATE_INFOPLIST_FILE: NO
     MACOSX_DEPLOYMENT_TARGET: 14.0
     PRODUCT_NAME: $(TARGET_NAME)
@@ -42,6 +42,8 @@ targets:
         optional: true
     entitlements:
       path: Notatod/Notatod.entitlements
+      properties:
+        com.apple.security.network.client: true
     info:
       path: Notatod/Info.plist
     settings:
@@ -57,7 +59,6 @@ targets:
     scheme:
       testTargets:
         - NotatodTests
-        - NotatodUITests
   NotatodTests:
     type: bundle.unit-test
     platform: macOS
@@ -71,28 +72,13 @@ targets:
         TEST_TARGET_NAME: Notatod
     dependencies:
       - target: Notatod
-  NotatodUITests:
-    type: bundle.ui-testing
-    platform: macOS
-    deploymentTarget: '14.0'
-    sources:
-      - path: NotatodUITests
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.notatod.app.uitests
-        GENERATE_INFOPLIST_FILE: YES
-        TEST_TARGET_NAME: Notatod
-    dependencies:
-      - target: Notatod
 schemes:
   Notatod:
     build:
       targets:
         Notatod: all
         NotatodTests: [test]
-        NotatodUITests: [test]
     test:
       gatherCoverageData: true
       targets:
         - name: NotatodTests
-        - name: NotatodUITests

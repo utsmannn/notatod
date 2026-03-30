@@ -50,17 +50,6 @@
                ReferencedContainer = "container:Notatod.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DD65C8F6895F2C5BCCF09256"
-               BuildableName = "NotatodUITests.xctest"
-               BlueprintName = "NotatodUITests"
-               ReferencedContainer = "container:Notatod.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

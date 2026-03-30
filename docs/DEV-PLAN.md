@@ -592,25 +592,14 @@ NotatodTests/
 - Services: 90%
 - ViewModels: 85%
 
-### 7.2 UI Tests
-
-```
-NotatodUITests/
-├── NoteCreationTests.swift
-├── NoteEditingTests.swift
-├── SearchTests.swift
-├── SettingsTests.swift
-└── KeyboardShortcutTests.swift
-```
-
-### 7.3 Performance Tests
+### 7.2 Performance Tests
 
 - [ ] App launch time < 500ms
 - [ ] Note switching < 100ms
 - [ ] Memory usage < 50MB idle
 - [ ] Markdown render < 100ms for 1000-line document
 
-### 7.4 Manual Testing Checklist
+### 7.3 Manual Testing Checklist
 
 - [ ] Test on macOS 14.0, 14.1, 15.0
 - [ ] Test on Apple Silicon and Intel

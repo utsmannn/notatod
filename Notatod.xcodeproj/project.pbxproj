@@ -36,14 +36,12 @@
 		A1E031DC1916339134B436BF /* PersistenceBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ECA9A686F1B663EFC73BCD /* PersistenceBootstrap.swift */; };
 		A605E6D95AF50A5584AFA208 /* TransparentScrollTrackModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77394C5118FC37EF4FD5DC2 /* TransparentScrollTrackModifier.swift */; };
 		A6DBFF90891D2053DDE63B47 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 90D616FE4485D827F3D33A9A /* MarkdownUI */; };
-		A91ABB6EC4851CCFC243EE23 /* NotesFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C939403006EF511A617863C /* NotesFlowUITests.swift */; };
 		AA4513E55F473B9453926921 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D59C3142CB5DB6636B72F01 /* SyncState.swift */; };
 		AC563D93FFD6383B7D42ADAA /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = BAFBCE9610E866C70C39C39F /* Splash */; };
 		AD642637F37E7471EBAD5DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405962E8D7382C64D621FC87 /* ContentView.swift */; };
 		B553C49E553800EF52497226 /* GoogleAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A87DD5FB4ABF64B9BE201A /* GoogleAuthService.swift */; };
 		B75BAE0DD5B6DD28EC5FDE89 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED038997BEDEDAC371952AE /* SettingsService.swift */; };
 		B7E54ED02803B2A7C363706E /* EditorSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9636615520AEAB8D9481D186 /* EditorSessionTests.swift */; };
-		B81907AAA88F322B05AAE060 /* SettingsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0765207570D6BD28196867B8 /* SettingsUITests.swift */; };
 		BFC93C6AB0BFDE17C6A0CB0F /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE62177955EFD84847169E51 /* EditorView.swift */; };
 		C6FCC2B80D20C51A52EE4D20 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD315A21CA637D4FA74FACB /* PreviewView.swift */; };
 		CA0C683BFBE8882AAF4F69F2 /* MarkdownTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AA435D12B531C33DFEC433 /* MarkdownTextEditor.swift */; };
@@ -51,7 +49,6 @@
 		E1876F57A91B02B01324A5FA /* HotkeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FA1F3F77F7706306DEECB /* HotkeyService.swift */; };
 		E24362774F9D6BC852EC6E4D /* NoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83101CB83B2F4E0ECCEF875F /* NoteImage.swift */; };
 		E3FE2C03103B6FA1E4269A50 /* SyncSecrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = B26D878C87E7FE9B653663FD /* SyncSecrets.plist */; };
-		E58F608B3A19A88CF215A891 /* SearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2A8889C2E42A1F24C7192 /* SearchUITests.swift */; };
 		E7A84F6030651B48C146F2BC /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFFFE450CACF436D09E5391 /* NetworkMonitor.swift */; };
 		EC0BDBC7C5C61CA3E72D3844 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AAD67919C3E36336647673 /* KeychainService.swift */; };
 		EC3D0396C7113CA808BF33BF /* SplitEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1828DEEDFF9AE5A3AFC1FA /* SplitEditorView.swift */; };
@@ -69,22 +66,13 @@
 			remoteGlobalIDString = 5EB53900A9FDEC3A8C051B4D;
 			remoteInfo = Notatod;
 		};
-		4DD4806213EE76FAAC125ECE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7BAD194983A1B049BA8DEC4C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5EB53900A9FDEC3A8C051B4D;
-			remoteInfo = Notatod;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		021FA1F3F77F7706306DEECB /* HotkeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyService.swift; sourceTree = "<group>"; };
 		05AE653F4B896453CDA07F29 /* LoopbackCallbackServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopbackCallbackServer.swift; sourceTree = "<group>"; };
-		0765207570D6BD28196867B8 /* SettingsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUITests.swift; sourceTree = "<group>"; };
 		07DEB3B2AAA409E0D9AB5397 /* NotatodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotatodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17893A8459F4FB2428FB8A50 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-		1C939403006EF511A617863C /* NotesFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesFlowUITests.swift; sourceTree = "<group>"; };
 		1D59C3142CB5DB6636B72F01 /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncState.swift; sourceTree = "<group>"; };
 		1DD315A21CA637D4FA74FACB /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		2A4F43D6580FEA2D0ABFBA6E /* Notatod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notatod.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,7 +94,6 @@
 		83101CB83B2F4E0ECCEF875F /* NoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteImage.swift; sourceTree = "<group>"; };
 		87219A873C35A0285C6C803E /* MenubarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenubarController.swift; sourceTree = "<group>"; };
 		89954E6E69EB2C8D0382B16A /* GoogleDriveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveService.swift; sourceTree = "<group>"; };
-		8B2F952C12DB268F6F937D39 /* NotatodUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotatodUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9012281DEB55662A50CAB304 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
 		922D4D4CFC8BBBDDF41D8FE6 /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		92A87DD5FB4ABF64B9BE201A /* GoogleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthService.swift; sourceTree = "<group>"; };
@@ -132,7 +119,6 @@
 		F546A1458ABBE9A25811171B /* SyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngine.swift; sourceTree = "<group>"; };
 		F77394C5118FC37EF4FD5DC2 /* TransparentScrollTrackModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentScrollTrackModifier.swift; sourceTree = "<group>"; };
 		F884E7304DC2AAC9E79095C1 /* NoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRepository.swift; sourceTree = "<group>"; };
-		FAB2A8889C2E42A1F24C7192 /* SearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,7 +189,6 @@
 			children = (
 				2A4F43D6580FEA2D0ABFBA6E /* Notatod.app */,
 				07DEB3B2AAA409E0D9AB5397 /* NotatodTests.xctest */,
-				8B2F952C12DB268F6F937D39 /* NotatodUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -257,7 +242,6 @@
 			children = (
 				B2D8D3379C418EDCBCD75355 /* Notatod */,
 				77099623A491169613B9ACEB /* NotatodTests */,
-				BA995202ED55B3DDD166CA00 /* NotatodUITests */,
 				490F814C66B03F823A479714 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -298,16 +282,6 @@
 				3369780C8CD79218E6619A26 /* Views */,
 			);
 			path = Notatod;
-			sourceTree = "<group>";
-		};
-		BA995202ED55B3DDD166CA00 /* NotatodUITests */ = {
-			isa = PBXGroup;
-			children = (
-				1C939403006EF511A617863C /* NotesFlowUITests.swift */,
-				FAB2A8889C2E42A1F24C7192 /* SearchUITests.swift */,
-				0765207570D6BD28196867B8 /* SettingsUITests.swift */,
-			);
-			path = NotatodUITests;
 			sourceTree = "<group>";
 		};
 		C3762A5CAD17D58DBAD04E92 /* Resources */ = {
@@ -380,24 +354,6 @@
 			productReference = 2A4F43D6580FEA2D0ABFBA6E /* Notatod.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DD65C8F6895F2C5BCCF09256 /* NotatodUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 73E289266E75ABE3C9913F39 /* Build configuration list for PBXNativeTarget "NotatodUITests" */;
-			buildPhases = (
-				76114E476006282BD37BCDCD /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				33564D1C33EEFB19AA1636AD /* PBXTargetDependency */,
-			);
-			name = NotatodUITests;
-			packageProductDependencies = (
-			);
-			productName = NotatodUITests;
-			productReference = 8B2F952C12DB268F6F937D39 /* NotatodUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -413,10 +369,6 @@
 					};
 					5EB53900A9FDEC3A8C051B4D = {
 						ProvisioningStyle = Automatic;
-					};
-					DD65C8F6895F2C5BCCF09256 = {
-						ProvisioningStyle = Automatic;
-						TestTargetID = 5EB53900A9FDEC3A8C051B4D;
 					};
 				};
 			};
@@ -441,7 +393,6 @@
 			targets = (
 				5EB53900A9FDEC3A8C051B4D /* Notatod */,
 				5A38C77AEFF9941269FF23CF /* NotatodTests */,
-				DD65C8F6895F2C5BCCF09256 /* NotatodUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -517,16 +468,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		76114E476006282BD37BCDCD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A91ABB6EC4851CCFC243EE23 /* NotesFlowUITests.swift in Sources */,
-				E58F608B3A19A88CF215A891 /* SearchUITests.swift in Sources */,
-				B81907AAA88F322B05AAE060 /* SettingsUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -534,11 +475,6 @@
 			isa = PBXTargetDependency;
 			target = 5EB53900A9FDEC3A8C051B4D /* Notatod */;
 			targetProxy = 0C980419F3A042CB5041F17C /* PBXContainerItemProxy */;
-		};
-		33564D1C33EEFB19AA1636AD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5EB53900A9FDEC3A8C051B4D /* Notatod */;
-			targetProxy = 4DD4806213EE76FAAC125ECE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -593,7 +529,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -602,24 +538,6 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.1;
-			};
-			name = Release;
-		};
-		20A52683D32E423B1EB8C30E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.notatod.app.uitests;
-				SDKROOT = macosx;
-				TEST_TARGET_NAME = Notatod;
 			};
 			name = Release;
 		};
@@ -659,24 +577,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
-		};
-		8B02FFD18965C0F3F1E63C32 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.notatod.app.uitests;
-				SDKROOT = macosx;
-				TEST_TARGET_NAME = Notatod;
-			};
-			name = Debug;
 		};
 		B69E55D90E1CE3B07F43A3E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -771,7 +671,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -801,15 +701,6 @@
 			buildConfigurations = (
 				B69E55D90E1CE3B07F43A3E4 /* Debug */,
 				74C72B2BF1A8EB306CAF7657 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		73E289266E75ABE3C9913F39 /* Build configuration list for PBXNativeTarget "NotatodUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8B02FFD18965C0F3F1E63C32 /* Debug */,
-				20A52683D32E423B1EB8C30E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

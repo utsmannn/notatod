@@ -1,0 +1,138 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: Semantic version bump to apply
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+concurrency:
+  group: release-master
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Manual release
+    runs-on:
+      - self-hosted
+      - macOS
+      - release
+    environment: release
+    steps:
+      - name: Validate release context
+        env:
+          EXPECTED_REF: refs/heads/master
+          EXPECTED_REPOSITORY: utsmannn/notatod
+        run: |
+          set -euo pipefail
+
+          if [[ "${GITHUB_REF}" != "${EXPECTED_REF}" ]]; then
+            echo "Release workflow only runs from ${EXPECTED_REF}, got ${GITHUB_REF}." >&2
+            exit 1
+          fi
+
+          if [[ "${GITHUB_REPOSITORY}" != "${EXPECTED_REPOSITORY}" ]]; then
+            echo "Release workflow only runs for ${EXPECTED_REPOSITORY}, got ${GITHUB_REPOSITORY}." >&2
+            exit 1
+          fi
+
+          if [[ "${GITHUB_ACTOR}" == "github-actions[bot]" ]]; then
+            echo "Release workflow must be started by a human actor." >&2
+            exit 1
+          fi
+
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up git author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump release version
+        id: version
+        run: |
+          set -euo pipefail
+
+          version_output="$(./scripts/release-version.sh "${{ inputs.bump_type }}" --write)"
+          printf '%s\n' "$version_output"
+          printf '%s\n' "$version_output" >> "$GITHUB_OUTPUT"
+
+      - name: Regenerate Xcode project
+        run: xcodegen generate
+
+      - name: Verify release diff scope
+        run: |
+          set -euo pipefail
+
+          allowed_files=(
+            "Notatod.xcodeproj/project.pbxproj"
+            "Notatod/Info.plist"
+            "project.yml"
+          )
+
+          changed_files="$(git diff --name-only)"
+
+          if [[ -z "$changed_files" ]]; then
+            echo "Release bump produced no changes." >&2
+            exit 1
+          fi
+
+          while IFS= read -r file; do
+            [[ -z "$file" ]] && continue
+
+            allowed=false
+            for allowed_file in "${allowed_files[@]}"; do
+              if [[ "$file" == "$allowed_file" ]]; then
+                allowed=true
+                break
+              fi
+            done
+
+            if [[ "$allowed" != true ]]; then
+              echo "Unexpected release diff: $file" >&2
+              exit 1
+            fi
+          done <<< "$changed_files"
+
+      - name: Build app
+        run: xcodebuild build -scheme Notatod -project Notatod.xcodeproj
+
+      - name: Run release tests
+        run: xcodebuild test -scheme Notatod -project Notatod.xcodeproj -only-testing:NotatodTests
+
+      - name: Commit release bump
+        run: |
+          set -euo pipefail
+
+          git add project.yml Notatod/Info.plist Notatod.xcodeproj/project.pbxproj
+          git commit -m "chore(release): v${{ steps.version.outputs.NEXT_VERSION }}"
+
+      - name: Create annotated tag
+        run: |
+          git tag -a "v${{ steps.version.outputs.NEXT_VERSION }}" -m "Release v${{ steps.version.outputs.NEXT_VERSION }}"
+
+      - name: Push release commit and tag
+        run: |
+          git push origin master
+          git push origin "v${{ steps.version.outputs.NEXT_VERSION }}"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.version.outputs.NEXT_VERSION }}" \
+            --target master \
+            --title "v${{ steps.version.outputs.NEXT_VERSION }}" \
+            --generate-notes
