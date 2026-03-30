@@ -122,7 +122,20 @@ jobs:
 
       - name: Create annotated tag
         run: |
-          git tag -a "v${{ steps.version.outputs.NEXT_VERSION }}" -m "Release v${{ steps.version.outputs.NEXT_VERSION }}"
+          set -euo pipefail
+
+          tag_name="v${{ steps.version.outputs.NEXT_VERSION }}"
+
+          if git ls-remote --exit-code --tags origin "refs/tags/${tag_name}" >/dev/null 2>&1; then
+            echo "Tag ${tag_name} already exists on origin." >&2
+            exit 1
+          fi
+
+          if git rev-parse "refs/tags/${tag_name}" >/dev/null 2>&1; then
+            git tag -d "${tag_name}"
+          fi
+
+          git tag -a "${tag_name}" -m "Release ${tag_name}"
 
       - name: Push release commit and tag
         run: |
