@@ -61,6 +61,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local commit.gpgsign false
 
+      - name: Fetch tags
+        run: git fetch --force --tags origin
+
       - name: Bump release version
         id: version
         run: |
@@ -125,11 +128,6 @@ jobs:
           set -euo pipefail
 
           tag_name="v${{ steps.version.outputs.NEXT_VERSION }}"
-
-          if git ls-remote --exit-code --tags origin "refs/tags/${tag_name}" >/dev/null 2>&1; then
-            echo "Tag ${tag_name} already exists on origin." >&2
-            exit 1
-          fi
 
           if git rev-parse "refs/tags/${tag_name}" >/dev/null 2>&1; then
             git tag -d "${tag_name}"

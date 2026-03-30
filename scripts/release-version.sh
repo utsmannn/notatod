@@ -31,16 +31,27 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECT_FILE="$ROOT_DIR/project.yml"
 PLIST_FILE="$ROOT_DIR/Notatod/Info.plist"
 
-RELEASE_VALUES="$(python3 - "$PROJECT_FILE" "$PLIST_FILE" "$BUMP_TYPE" "$WRITE_CHANGES" <<'PY'
+RELEASE_VALUES="$(python3 - "$PROJECT_FILE" "$PLIST_FILE" "$BUMP_TYPE" "$WRITE_CHANGES" "$ROOT_DIR" <<'PY'
 from pathlib import Path
 import plistlib
 import re
+import subprocess
 import sys
 
 project_path = Path(sys.argv[1])
 plist_path = Path(sys.argv[2])
 bump_type = sys.argv[3]
 write_changes = sys.argv[4] == "true"
+root_dir = Path(sys.argv[5])
+
+
+def parse_version(version: str) -> tuple[int, int, int]:
+    return tuple(map(int, version.split(".")))
+
+
+def format_version(version: tuple[int, int, int]) -> str:
+    return f"{version[0]}.{version[1]}.{version[2]}"
+
 
 project_text = project_path.read_text()
 version_match = re.search(r'^(\s*MARKETING_VERSION:\s*)(\d+)\.(\d+)\.(\d+)(\s*)$', project_text, re.MULTILINE)
@@ -51,9 +62,32 @@ if version_match is None:
 if build_match is None:
     raise SystemExit("CURRENT_PROJECT_VERSION not found in project.yml")
 
-major, minor, patch = map(int, version_match.group(2, 3, 4))
-current_version = f"{major}.{minor}.{patch}"
+project_version = tuple(map(int, version_match.group(2, 3, 4)))
 current_build = int(build_match.group(2))
+
+latest_tag_version = None
+result = subprocess.run(
+    ["git", "tag", "--list", "v[0-9]*.[0-9]*.[0-9]*"],
+    cwd=root_dir,
+    capture_output=True,
+    text=True,
+    check=True,
+)
+
+for raw_tag in result.stdout.splitlines():
+    match = re.fullmatch(r'v(\d+)\.(\d+)\.(\d+)', raw_tag.strip())
+    if match is None:
+        continue
+    version = tuple(map(int, match.groups()))
+    if latest_tag_version is None or version > latest_tag_version:
+        latest_tag_version = version
+
+base_version = project_version
+if latest_tag_version is not None and latest_tag_version > base_version:
+    base_version = latest_tag_version
+
+current_version = format_version(base_version)
+major, minor, patch = base_version
 
 if bump_type == "major":
     next_version = f"{major + 1}.0.0"
