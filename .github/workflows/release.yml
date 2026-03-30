@@ -13,7 +13,7 @@ on:
           - major
 
 concurrency:
-  group: release-master
+  group: release-main
   cancel-in-progress: false
 
 permissions:
@@ -25,12 +25,12 @@ jobs:
     runs-on:
       - self-hosted
       - macOS
-      - release
+      - X64
     environment: release
     steps:
       - name: Validate release context
         env:
-          EXPECTED_REF: refs/heads/master
+          EXPECTED_REF: refs/heads/main
           EXPECTED_REPOSITORY: utsmannn/notatod
         run: |
           set -euo pipefail
@@ -125,7 +125,7 @@ jobs:
 
       - name: Push release commit and tag
         run: |
-          git push origin master
+          git push origin main
           git push origin "v${{ steps.version.outputs.NEXT_VERSION }}"
 
       - name: Publish GitHub release
@@ -133,6 +133,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "v${{ steps.version.outputs.NEXT_VERSION }}" \
-            --target master \
+            --target main \
             --title "v${{ steps.version.outputs.NEXT_VERSION }}" \
             --generate-notes
