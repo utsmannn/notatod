@@ -8,7 +8,6 @@ struct MarkdownTextEditor: NSViewRepresentable {
     var onTextChange: (String) -> Void
 
     func makeNSView(context: Context) -> NSScrollView {
-        // Create scroll view
         let scrollView = NSScrollView()
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
@@ -17,7 +16,6 @@ struct MarkdownTextEditor: NSViewRepresentable {
         scrollView.drawsBackground = false
         scrollView.contentView.drawsBackground = false
 
-        // Create text view with custom layout
         let textView = MarkdownHeaderTextView()
         textView.font = NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
         textView.baseFontSize = fontSize
@@ -26,30 +24,23 @@ struct MarkdownTextEditor: NSViewRepresentable {
         textView.isSelectable = true
         textView.isEditable = true
         textView.delegate = context.coordinator
-        textView.onTextChange = { newText in
-            onTextChange(newText)
-        }
 
-        // Background
         textView.backgroundColor = .clear
         textView.drawsBackground = false
 
-        // Layout
         textView.isHorizontallyResizable = false
         textView.isVerticallyResizable = true
         textView.autoresizingMask = [.width]
 
-        // Container
         let container = textView.textContainer!
         container.containerSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
         container.widthTracksTextView = true
 
-        // Set document view
         scrollView.documentView = textView
 
-        // Set initial text
         textView.string = text
         textView.applyHeaderStyles()
+        context.coordinator.lastSyncedText = text
 
         return scrollView
     }
@@ -57,42 +48,63 @@ struct MarkdownTextEditor: NSViewRepresentable {
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
         guard let textView = scrollView.documentView as? MarkdownHeaderTextView else { return }
 
-        // Enforce transparent background
+        context.coordinator.parent = self
+
         scrollView.drawsBackground = false
         scrollView.contentView.drawsBackground = false
         textView.drawsBackground = false
         textView.backgroundColor = .clear
 
-        // Update base font size if changed
         if textView.baseFontSize != fontSize {
             textView.baseFontSize = fontSize
             textView.applyHeaderStyles()
         }
 
-        // Update text only if different (avoid cursor jumping)
-        if textView.string != text {
-            let selectedRange = textView.selectedRange()
-            textView.string = text
-            textView.applyHeaderStyles()
-            textView.setSelectedRange(selectedRange)
+        guard textView.string != text else {
+            context.coordinator.lastSyncedText = text
+            return
         }
+
+        guard context.coordinator.lastSyncedText != text else {
+            return
+        }
+
+        let selectedRange = textView.selectedRange()
+        context.coordinator.isApplyingExternalText = true
+        textView.string = text
+        context.coordinator.isApplyingExternalText = false
+        context.coordinator.lastSyncedText = text
+        textView.applyHeaderStyles()
+        textView.setSelectedRange(clampedRange(selectedRange, for: text))
     }
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
 
+    private func clampedRange(_ range: NSRange, for text: String) -> NSRange {
+        let length = (text as NSString).length
+        let location = min(range.location, length)
+        let maxLength = max(0, length - location)
+        return NSRange(location: location, length: min(range.length, maxLength))
+    }
+
     class Coordinator: NSObject, NSTextViewDelegate {
         var parent: MarkdownTextEditor
+        var isApplyingExternalText = false
+        var lastSyncedText = ""
 
         init(_ parent: MarkdownTextEditor) {
             self.parent = parent
         }
 
         func textDidChange(_ notification: Notification) {
-            guard let textView = notification.object as? MarkdownHeaderTextView else { return }
+            guard !isApplyingExternalText,
+                  let textView = notification.object as? MarkdownHeaderTextView else { return }
+            let updatedText = textView.string
+            lastSyncedText = updatedText
             textView.applyHeaderStyles()
-            parent.onTextChange(textView.string)
+            parent.onTextChange(updatedText)
         }
     }
 }
@@ -101,12 +113,6 @@ struct MarkdownTextEditor: NSViewRepresentable {
 
 class MarkdownHeaderTextView: NSTextView {
     var baseFontSize: Double = 14
-    var onTextChange: ((String) -> Void)?
-
-    override func didChangeText() {
-        super.didChangeText()
-        onTextChange?(self.string)
-    }
 
     override func keyDown(with event: NSEvent) {
         // Check for Cmd+B (bold) or Cmd+I (italic)
@@ -166,17 +172,14 @@ class MarkdownHeaderTextView: NSTextView {
     }
 
     private func replaceSelectedText(with newText: String) {
-        let selectedRange = self.selectedRange()
+        let range = selectedRange()
+        guard shouldChangeText(in: range, replacementString: newText) else { return }
 
-        // Replace text
-        self.textStorage?.replaceCharacters(in: selectedRange, with: newText)
+        textStorage?.replaceCharacters(in: range, with: newText)
+        didChangeText()
 
-        // Update selection to cover new text
-        let newRange = NSRange(location: selectedRange.location, length: newText.utf16.count)
-        self.setSelectedRange(newRange)
-
-        // Trigger change notification
-        onTextChange?(self.string)
+        let newRange = NSRange(location: range.location, length: newText.utf16.count)
+        setSelectedRange(newRange)
         applyHeaderStyles()
     }
 
