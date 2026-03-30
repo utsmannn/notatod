@@ -67,6 +67,20 @@ jobs:
       - name: Fetch tags
         run: git fetch --force --tags origin
 
+      - name: Materialize sync secrets plist
+        env:
+          SYNC_SECRETS_PLIST_B64: ${{ secrets.SYNC_SECRETS_PLIST_B64 }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${SYNC_SECRETS_PLIST_B64}" ]]; then
+            echo "SYNC_SECRETS_PLIST_B64 is not configured." >&2
+            exit 1
+          fi
+
+          mkdir -p Notatod/Config
+          printf '%s' "${SYNC_SECRETS_PLIST_B64}" | base64 --decode > Notatod/Config/SyncSecrets.plist
+
       - name: Bump release version
         id: version
         run: |
@@ -197,3 +211,7 @@ jobs:
             --target main \
             --title "v${version}" \
             --generate-notes
+
+      - name: Remove materialized sync secrets plist
+        if: always()
+        run: rm -f Notatod/Config/SyncSecrets.plist
