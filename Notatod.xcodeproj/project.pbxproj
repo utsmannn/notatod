@@ -48,7 +48,6 @@
 		CFBCA374F11C91A18A2C1763 /* EditorSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3E91456FF82F389162144A /* EditorSession.swift */; };
 		E1876F57A91B02B01324A5FA /* HotkeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FA1F3F77F7706306DEECB /* HotkeyService.swift */; };
 		E24362774F9D6BC852EC6E4D /* NoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83101CB83B2F4E0ECCEF875F /* NoteImage.swift */; };
-		E3FE2C03103B6FA1E4269A50 /* SyncSecrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = B26D878C87E7FE9B653663FD /* SyncSecrets.plist */; };
 		E7A84F6030651B48C146F2BC /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFFFE450CACF436D09E5391 /* NetworkMonitor.swift */; };
 		EC0BDBC7C5C61CA3E72D3844 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AAD67919C3E36336647673 /* KeychainService.swift */; };
 		EC3D0396C7113CA808BF33BF /* SplitEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1828DEEDFF9AE5A3AFC1FA /* SplitEditorView.swift */; };
@@ -104,7 +103,6 @@
 		A0E8E162974306C95EA9CCE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A5E081C7CDA233E659D61837 /* NoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRowView.swift; sourceTree = "<group>"; };
 		AAF6AAA25E15E87C57E3670F /* SyncSecrets.example.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = SyncSecrets.example.plist; sourceTree = "<group>"; };
-		B26D878C87E7FE9B653663FD /* SyncSecrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = SyncSecrets.plist; sourceTree = "<group>"; };
 		B9ECA9A686F1B663EFC73BCD /* PersistenceBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceBootstrap.swift; sourceTree = "<group>"; };
 		BEFC27337A67483E66045568 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C0520B65D45CF0F7D8049693 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				AAF6AAA25E15E87C57E3670F /* SyncSecrets.example.plist */,
-				B26D878C87E7FE9B653663FD /* SyncSecrets.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -404,7 +401,6 @@
 			files = (
 				7BB0B3B9B113558613AA0D16 /* Assets.xcassets in Resources */,
 				12FACF179BA2066D89634665 /* SyncSecrets.example.plist in Resources */,
-				E3FE2C03103B6FA1E4269A50 /* SyncSecrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,7 +510,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -529,7 +525,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -650,7 +646,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -671,7 +667,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
