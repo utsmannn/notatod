@@ -437,14 +437,17 @@ final class GoogleAuthService: NSObject {
         var request = URLRequest(url: Constants.tokenURL)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = formEncodedBody([
+
+        var parameters: [String: String?] = [
             "code": code,
             "client_id": configuration.clientID,
-            "client_secret": configuration.clientSecret,
             "redirect_uri": redirectURI,
             "grant_type": "authorization_code",
             "code_verifier": verifier
-        ])
+        ]
+        parameters["client_secret"] = normalizedClientSecret
+
+        request.httpBody = formEncodedBody(parameters)
 
         do {
             let (data, response) = try await session.data(for: request)
@@ -459,12 +462,15 @@ final class GoogleAuthService: NSObject {
         var request = URLRequest(url: Constants.tokenURL)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = formEncodedBody([
+
+        var parameters: [String: String?] = [
             "client_id": configuration.clientID,
-            "client_secret": configuration.clientSecret,
             "refresh_token": refreshToken,
             "grant_type": "refresh_token"
-        ])
+        ]
+        parameters["client_secret"] = normalizedClientSecret
+
+        request.httpBody = formEncodedBody(parameters)
 
         do {
             let (data, response) = try await session.data(for: request)
@@ -537,6 +543,11 @@ final class GoogleAuthService: NSObject {
         } catch {
             throw mapTransportError(error)
         }
+    }
+
+    private var normalizedClientSecret: String? {
+        let trimmed = configuration.clientSecret?.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed?.isEmpty == false ? trimmed : nil
     }
 
     private func persist(tokens: GoogleStoredTokens) throws {

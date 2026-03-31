@@ -39,6 +39,8 @@ struct NotatodApp: App {
     }
 
     var body: some Scene {
+        let panelGeometry = menubarController.panelGeometry
+
         MenuBarExtra("Notatod", systemImage: "note.text") {
             ContentView()
                 .environment(appState)
@@ -47,7 +49,14 @@ struct NotatodApp: App {
                 .environment(settingsService)
                 .environment(syncService)
                 .modelContainer(modelContainer)
-                .frame(minWidth: 760, idealWidth: 920, maxWidth: 1120, minHeight: 520, idealHeight: 640, maxHeight: 820)
+                .frame(
+                    minWidth: panelGeometry.minWidth,
+                    idealWidth: panelGeometry.idealWidth,
+                    maxWidth: panelGeometry.maxWidth,
+                    minHeight: panelGeometry.minHeight,
+                    idealHeight: panelGeometry.idealHeight,
+                    maxHeight: panelGeometry.maxHeight
+                )
                 .id(appState.appearance)
                 .task {
                     SyncDebugLogger.reset()

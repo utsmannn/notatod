@@ -39,7 +39,6 @@ targets:
     resources:
       - path: Notatod/Resources
       - path: Notatod/Config
-        optional: true
     entitlements:
       path: Notatod/Notatod.entitlements
       properties:

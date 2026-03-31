@@ -48,9 +48,11 @@ enum SyncConfigurationLoader {
 
         let redirectURI = (plist["GOOGLE_REDIRECT_URI"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
 
+        let clientSecret = (plist["GOOGLE_CLIENT_SECRET"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
+
         return SyncConfiguration(
             googleClientID: clientID,
-            googleClientSecret: plist["GOOGLE_CLIENT_SECRET"] as? String,
+            googleClientSecret: clientSecret?.isEmpty == true ? nil : clientSecret,
             googleRedirectURI: redirectURI?.isEmpty == true ? nil : redirectURI
         )
     }

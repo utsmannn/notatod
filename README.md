@@ -75,8 +75,8 @@ cp Notatod/Config/SyncSecrets.example.plist Notatod/Config/SyncSecrets.plist
 Then fill these values:
 
 - `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`
 - `GOOGLE_REDIRECT_URI`
+- `GOOGLE_CLIENT_SECRET` (optional for native desktop OAuth with PKCE; leave it empty unless your Google OAuth client explicitly requires it)
 
 `SyncSecrets.plist` is intended to stay untracked.
 
