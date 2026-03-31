@@ -141,7 +141,39 @@ jobs:
             -derivedDataPath "$BUILD_DIR/DerivedData"
 
       - name: Run release tests
-        run: xcodebuild test -scheme Notatod -project Notatod.xcodeproj -only-testing:NotatodTests
+        run: |
+          set -euo pipefail
+
+          xcodebuild test \
+            -scheme Notatod \
+            -project Notatod.xcodeproj \
+            -only-testing:NotatodTests \
+            -derivedDataPath "$BUILD_DIR/DerivedData"
+
+      - name: Verify release app bundle
+        run: |
+          set -euo pipefail
+
+          app_path="$BUILD_DIR/DerivedData/Build/Products/Release/Notatod.app"
+          resources_path="$app_path/Contents/Resources"
+          info_plist="$app_path/Contents/Info.plist"
+          google_callback_scheme="com.googleusercontent.apps.463402542797-gpugg92blqosesoijl4mnhiivsl6bi0e"
+
+          if [[ ! -d "$app_path" ]]; then
+            echo "Built app not found at $app_path" >&2
+            exit 1
+          fi
+
+          if [[ ! -f "$resources_path/SyncSecrets.plist" ]]; then
+            echo "SyncSecrets.plist is missing from the built app bundle." >&2
+            exit 1
+          fi
+
+          registered_schemes="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleURLTypes' "$info_plist" 2>/dev/null || true)"
+          if [[ "$registered_schemes" != *"$google_callback_scheme"* ]]; then
+            echo "Google callback scheme $google_callback_scheme is missing from the built app Info.plist." >&2
+            exit 1
+          fi
 
       - name: Package DMG
         run: |
